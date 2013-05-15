@@ -222,15 +222,12 @@
     <Content Include="msvcr100.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="PhoneGap\Index.html" />
     <None Include="Properties\PublishProfiles\File.pubxml" />
     <None Include="Properties\PublishProfiles\LocalIIS.pubxml" />
     <None Include="Properties\PublishProfiles\mdeje - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\njamnjam - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\njamnjam - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
-    <None Include="PhoneGap\jqm.page.params.js" />
-    <None Include="PhoneGap\mobile.js" />
     <Content Include="Scripts\App.js" />
     <Content Include="Scripts\Artikli.js" />
     <Content Include="Scripts\cordova-2.1.0.js" />

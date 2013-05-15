@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <Button
+        android:id="@+id/btnLocirajMe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Button" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/udaljenost"
+        android:layout_alignBottom="@+id/udaljenost"
+        android:layout_alignParentLeft="true"
+        android:text="@string/udaljenost" />
+
+    <EditText
+        android:id="@+id/udaljenost"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btnLocirajMe"
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        android:inputType="number"
+        android:singleLine="true" />
+
+    <EditText
+        android:id="@+id/nazivArtikla"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/udaljenost"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="@string/naziv"
+        android:singleLine="true" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/btnPronadji"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/nazivArtikla"
+        android:layout_marginTop="50dp"
+        android:onClick="pronadji"
+        android:text="@string/pronadji" />
+
+</RelativeLayout>

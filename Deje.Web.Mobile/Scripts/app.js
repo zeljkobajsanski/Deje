@@ -1,5 +1,5 @@
-﻿//var baseUri = 'http://mdeje.azurewebsites.net/';
-var baseUri = 'http://localhost:36861/';
+﻿var baseUri = 'http://njamnjam.azurewebsites.net/';
+//var baseUri = 'http://localhost:36861/';
 var nePretrazuj = false;
 var map;
 var mapsKey = 'AoAspjo-51Af3fRuiPmgnwZ6969gydoWrZ26rmvfE9tk10e7Q5JYNvs4rXLQ8VKn';
