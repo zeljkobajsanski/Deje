@@ -28,7 +28,7 @@ import rs.zeks.deje.model.GrupaArtikla;
 
 public class ServiceProxy {
 	
-	private String serviceAddress = "http://deje1.azurewebsites.net";
+	private String serviceAddress = "http://njamnjam.azurewebsites.net";
 	//private String serviceAddress = "http://192.168.1.5/deje.web.mobile";
 	
 	public List<Artikal> ucitajArtiklePoNazivu(String latituda, String longituda, String udaljenost, String naziv) throws IOException {
