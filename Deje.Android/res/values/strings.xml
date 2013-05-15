@@ -8,5 +8,26 @@
     <string name="udaljenost">Udaljenost</string>
     <string name="pronadji">Pronađi</string>
     <string name="title_activity_artikli">Artikli</string>
+    <string name="title_activity_grupe_artikala">Grupe artikala</string>
+    <string name="pozicija_nije_pronadjena">Vaša pozicija nije pronađena</string>
+    <string name="pozicija_je_azurirana">Vaša pozicija je ažurirana</string>
+    <string name="title_activity_dobavljaci">Dobavljači</string>
+    <string name="dobavljaci">Dobavljači</string>
+    <string name="mapa">Mapa</string>
+    <string name="naziv_artikla">Naziv artikla</string>
+    <string name="opis_artikla">Opis artikla</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_pregled_dobavljaca">Pregled dobavljača</string>
+    <string name="kontakt">Kontakt podaci</string>
+    <string name="ostala_ponuda">Ponuda</string>
+    <string name="title_activity_ponuda_dobavljaca">Ponuda</string>
+    <string name="title_activity_pretraga_lokacije">Pretraga lokacije</string>
+    <string name="vasa_adresa">Vaša adresa i(li) mesto...</string>
+    <string name="nadji_adresu">Nađi po adresi</string>
+    <string name="ili">ili</string>
+    <string name="lociraj_me">Lociraj me</string>
+    <string name="title_activity_prikaz_adresa">Rezultati pretrage</string>
+    <string name="pretraga_nije_moguca">Pretraga nije moguća. Ažurirajte Vašu lokaciju</string>
+    <string name="nema_rezultata">Nema rezultata za izabrane kriterijume pretrage</string>
 
 </resources>

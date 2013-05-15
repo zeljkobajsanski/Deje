@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PretragaLokacijeActivity" >
+
+    <EditText
+        android:id="@+id/adresa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:hint="@string/vasa_adresa"
+        android:inputType="textPostalAddress"
+        android:singleLine="true" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/btnNadjiAdresu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/adresa"
+        android:onClick="pronadjiAdresu"
+        android:text="@string/nadji_adresu" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnNadjiAdresu"
+        android:layout_centerHorizontal="true"
+        android:text="@string/ili" />
+
+    <Button
+        android:id="@+id/btnLocirajMe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:onClick="locirajMe"
+        android:text="@string/lociraj_me" />
+
+</RelativeLayout>

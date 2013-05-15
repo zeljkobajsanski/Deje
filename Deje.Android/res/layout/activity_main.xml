@@ -10,37 +10,40 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Button" />
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="5dp"
+        android:onClick="locirajMe"
+        android:text="@string/pozicija_nije_pronadjena" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/udaljenost"
-        android:layout_alignBottom="@+id/udaljenost"
+        android:layout_below="@+id/btnLocirajMe"
         android:layout_alignParentLeft="true"
         android:text="@string/udaljenost" />
 
     <EditText
         android:id="@+id/udaljenost"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/label"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/btnLocirajMe"
-        android:layout_marginTop="18dp"
         android:ems="10"
         android:inputType="number"
         android:singleLine="true" />
 
     <EditText
         android:id="@+id/nazivArtikla"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentLeft="false"
         android:layout_below="@+id/udaljenost"
-        android:layout_marginTop="40dp"
+        android:layout_toLeftOf="@+id/btnPronadji"
         android:ems="10"
         android:hint="@string/naziv"
+        android:imeOptions="actionDone"
         android:singleLine="true" >
 
         <requestFocus />
@@ -48,12 +51,11 @@
 
     <Button
         android:id="@+id/btnPronadji"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/nazivArtikla"
-        android:layout_marginTop="50dp"
+        android:layout_alignBottom="@+id/nazivArtikla"
+        android:layout_alignLeft="@+id/udaljenost"
         android:onClick="pronadji"
         android:text="@string/pronadji" />
-
+    
 </RelativeLayout>

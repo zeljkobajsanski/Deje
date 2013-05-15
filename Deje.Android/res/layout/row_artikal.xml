@@ -22,10 +22,9 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/slika"
-        android:capitalize="sentences"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="Naziv artikla"
+        android:text="@string/naziv_artikla"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -34,9 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/naziv"
         android:layout_below="@+id/naziv"
-        android:capitalize="sentences"
         android:ellipsize="end"
-        android:text="Opis artikla"
+        android:text="@string/opis_artikla"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
