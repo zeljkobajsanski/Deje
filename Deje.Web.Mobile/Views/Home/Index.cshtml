@@ -1,0 +1,296 @@
+﻿@{
+    Layout = null;   
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>@ViewBag.Title</title>
+    @*<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />*@
+    <link href="@Url.Content("~/Content/jquery.mobile-1.2.0.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/jquery.mobile.structure-1.2.0.min.css")" rel="stylesheet" />
+    @*<link href="@Url.Content("~/Content/jquery.mobile.theme-1.2.0.css")" rel="stylesheet" />*@
+    <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/modernizr-2.5.3.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.mobile-1.2.0.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jqm.page.params.js")"></script>
+    <script src="@Url.Content("~/Scripts/cordova-2.1.0.js")"></script>
+    <script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+    @*<script src="@Url.Content("~/Scripts/mobile.js")" type="text/javascript"></script>*@
+    <script src="@Url.Content("~/Scripts/app.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Home.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/PretragaLokacije.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/GrupeArtikala.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Artikli.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Mapa.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Dobavljac.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Ruta.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/History.js")" type="text/javascript"></script>
+    <style>
+        .red {
+            color: red;
+        }
+        .pushpin {
+            width: 150px;
+            height: 60px;
+            background-color: white;
+            padding: 10px;
+            -webkit-box-shadow: 4px 4px 15px rgba(50, 50, 50, 0.75);
+            -moz-box-shadow:    4px 4px 15px rgba(50, 50, 50, 0.75);
+            box-shadow:         4px 4px 15px rgba(50, 50, 50, 0.75);
+        }
+        .pushpin p {
+            padding: 0;
+            margin: 2px;
+            font-size: 12px;
+        }
+        .pushpin p.naziv {
+            font-weight: bold;
+        }
+        .pushpin a{
+            float: right;
+            font-size: 10px;
+            cursor: pointer;
+        }
+        #dobavljacNazivIOpis {
+            margin: 0 0 0 4px;
+        }
+        #nazivDobavljaca, #opisDobavljaca {
+            margin: 0 0 4px 0;
+        }
+        #opisDobavljaca {
+            text-align: justify;
+            font-style: italic;
+        }
+        header h1 {
+            cursor: pointer;
+        }
+        .ui-icon-world {
+            background: url('../../Content/world.png') no-repeat;
+        }
+        .ui-icon-telephone {
+            background: url('../../Content/phone.png') no-repeat;
+        }
+        .background {
+            /*background: url('../../Content/background.jpg') no-repeat;*/
+        }
+        .logo {
+            float: left; margin: 3px;
+        }
+    </style>
+</head>
+
+    <body>
+        <!-- PAGES -->
+        
+        <!-- Home -->
+        <section data-role="page" id="Home" class="background">
+            <header data-role="header">
+                <img src="@Url.Content("~/Content/logo.png")" alt="Logo" class="logo"/>
+                <h1>DeJe mobile</h1>
+            </header>
+            <article data-role="content">
+                <a id="btnPronadjiMe" href="#PretragaLokacije" data-role="button" data-icon="world">Vaša pozicija nije pronađena</a>
+                <div data-role="fieldcontain">
+                    <label for="distance">Udaljenost: </label>
+                    <input type="number" id="distance" name="distance" data-inline="true"/>    
+                </div>
+                <form action="#" id="pretragaPoNazivu">
+                    <div style="float: right; margin-top: 4px;">
+                        <a href="#history" data-role="button" data-inline="true" data-icon="arrow-r" data-iconpos="notext"></a>    
+                    </div>
+                    
+                    <div style="overflow: hidden">
+                        <input type="search" id="nazivArtikla" name="nazivArtikla" placeholder="Naziv artikla..." />    
+                    </div>
+                </form>
+                <div style="clear: both;">
+                    <a id="btnPretraziGrupeArtikala" href="#GrupeArtikala" data-icon="search" data-role="button">Pronađi</a>
+                </div>
+                
+            </article>
+        </section>
+        <!-- Home -->
+        
+        <!-- Pretraga lokacije -->
+        <section data-role="page" id="PretragaLokacije" data-add-back-btn="true" class="background">
+            <header data-role="header">
+                <a href="#Home" data-icon="home" data-iconpos="notext" class="ui-btn-right">Home</a>
+                <h1>DeJe mobile</h1>
+            </header>
+            <article data-role="content">
+                <form id="frmPretragaLokacije">
+                    <input type="search" id="adresa" name="adresa" placeholder="Unesite adresu (mesto)"/>
+                </form>
+                <p style="text-align: center">ili kliknite</p>
+                <a id="btnLocirajMe" href="#Home" type="button" data-icon="world">Lociraj me</a>    
+            </article>
+        </section>
+        <!-- Pretraga lokacije -->
+        
+        <!-- GrupeArtikala -->
+        <section id="GrupeArtikala" data-role="page" class="background">
+            <header data-role="header">
+                <img src="@Url.Content("~/Content/logo.png")" alt="Logo" class="logo"/>
+                <h1>DeJe mobile</h1>
+                <a href="#" id="btnOsveziGrupeArtikala" data-icon="refresh" data-iconpos="notext" class="btnRefresh ui-btn-right">Osveži</a>
+            </header>
+            <article data-role="content">
+                <input type="hidden" id="nePretrazuj" />
+                <ul data-role="listview"></ul>
+            </article>
+        </section>
+        <!-- GrupeArtikala -->
+        
+        <!-- Artikli -->
+        <section id="Artikli" data-role="page" data-add-back-btn="true" class="background">
+            <header data-role="header">
+                <a href="#" id="btnOsveziArtikle" data-icon="refresh" data-iconpos="notext" class="btnRefresh ui-btn-right">Osveži</a>
+                <h1>DeJe mobile</h1>
+            </header>
+            <article data-role="content">
+                <ul data-role="listview" id="listaArtikala" data-filter="true" data-filter-placeholder="Filtriraj...">
+                </ul>
+            </article>
+        </section>
+        <!-- Artikli -->
+        
+        <!-- Mapa -->
+        <section id="Mapa" data-role="page" data-fullscreen="true" data-disable-page-zoom="false" data-add-back-btn="true">
+            <header data-role="header" data-position="fixed">
+                <a href="#Home" data-icon="home" data-iconpos="notext" class="ui-btn-right">Home</a>
+            </header>
+            <article id="map" data-role="content"></article>
+            <footer data-role="footer" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#" data-icon="plus" id="btnZoomIn"></a></li>
+                        <li><a href="#" data-icon="minus" id="btnZoomOut"></a></li>
+                    </ul>    
+                </div>
+            </footer>
+        </section>
+         <!-- Mapa -->
+        
+         <!-- Dobavljac -->
+        <section id="Dobavljac" data-role="page" data-add-back-btn="true">
+            <header data-role="header"><h1>DeJe Mobile</h1></header>
+            <article data-role="content">
+                <img id="slikaDobavljaca" src="#" alt="Slika" style="float: left; width: 80px; height: 80px;"/>
+                <div id="dobavljacNazivIOpis" style='float: left;'>
+                    <h1 id="nazivDobavljaca"></h1>
+                    <p id="vrstaDobavljaca"></p>
+                </div>
+                <div style="clear: left;">
+                    <p id="opisDobavljaca"></p>        
+                </div>
+            </article>
+            <footer data-role="footer" data-id="main-tabbar" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#" class="ui-btn-active ui-state-persist" data-icon="info">Info</a></li>
+                        <li><a href="#" data-icon="grid" class="btnPonuda">Ponuda</a></li>
+                        <li><a href="#" data-icon="home" class="btnKontakt">Kontakt</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+        <!-- Dobavljac -->
+        
+        <!-- Ponuda -->
+        <section id="Ponuda" data-role="page">
+            <header data-role="header"><h1>DeJe mobile</h1></header>
+            <article data-role="content">
+                <ul id="meniLista" data-role="listview"></ul>
+            </article>
+            <footer data-role="footer" data-id="main-tabbar" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#" data-icon="info" class="btnDobavljac">Info</a></li>
+                        <li><a href="#" data-icon="grid"  class="ui-btn-active ui-state-persist">Ponuda</a></li>
+                        <li><a href="#" data-icon="home" class="btnKontakt">Kontakt</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+        <!-- Ponuda -->
+        
+        <!-- Kontakt -->
+        <section id="Kontakt" data-role="page">
+            <header data-role="header"><h1>DeJe mobile</h1></header>
+            <article data-role="content">
+                <h2 id="nazivKontakta"></h2>
+                <p id="mestoKontakta"></p>
+                <a href="#" id="wwwKontakta" target="_blank"></a>
+                <a href="#" data-role="button" id="telefonKontakta" data-icon="telephone"></a>
+                <a href="#Ruta" data-role="button" id="kakoStici" data-icon="forward">Kako stići</a>
+            </article>
+            <footer data-role="footer" data-id="main-tabbar" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#" data-icon="info" class="btnDobavljac">Info</a></li>
+                        <li><a href="#" data-icon="grid" class="btnPonuda">Ponuda</a></li>
+                        <li><a href="#" data-icon="home" class="ui-btn-active ui-state-persist">Kontakt</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+        <!-- Kontakt -->
+        
+        <!-- Ruta -->
+        <section id="Ruta" data-role="page" data-fullscreen="true" data-disable-page-zoom="false" data-add-back-btn="true">
+            <header data-role="header" data-position="fixed"><h1>DeJe mobile</h1></header>
+            <article data-role="content">
+                <div id="routeMap"></div>
+            </article>
+            <footer data-role="footer" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#" data-icon="plus" id="btnRouteZoomIn"></a></li>
+                        <li><a href="#" data-icon="minus" id="btnRouteZoomOut"></a></li>
+                    </ul>    
+                </div>
+            </footer>
+        </section>
+        <!-- Ruta -->
+        
+        <!-- DIALOGS -->
+        <section data-role="dialog" id="pronadjeneAdreseDialog">
+            <header data-role="header"><h1>Izaberite adresu</h1></header>
+            <article data-role="content">
+                <ul data-role="listview">
+                </ul>
+            </article>
+            <footer data-role="footer"></footer>
+        </section>
+        
+        <section data-role="dialog" id="history">
+            <header data-role="header">
+                <h1>Istorija</h1>
+                <a href="#" id="btnObrisiHistory" data-role="button" data-theme="b">Obriši</a>
+            </header>
+            <article data-role="content">
+                <ul data-role="listview">
+                </ul>
+            </article>
+            <footer data-role="footer">
+                
+            </footer>
+        </section>
+
+        <section data-role="dialog" id="infoDialog">
+            <header data-role="header"><h1>Info</h1></header>
+            <article data-role="content">
+                <p id="infoMessage" style="text-align: center"></p>
+            </article>
+            <footer data-role="footer"></footer>
+        </section>
+
+    </body>
+</html>
+
+
+
+      

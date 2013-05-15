@@ -1,0 +1,43 @@
+﻿@using System.Web.UI.WebControls
+@model IEnumerable<Deje.Core.Model.Artikal>
+
+@Html.DevExpress().GridView(s =>
+{
+    s.Name = "gvArtikliSinonima";
+    s.Caption = "Artikli sinonima";
+    s.CallbackRouteValues = new {Controller = "Sinonimi", Action = "VratiArtikleSinonimaCallback"};
+    s.Columns.Add(c =>
+                      {
+                          c.FieldName = "Id";
+                          c.Caption = "Artikal";
+                          c.ColumnType = MVCxGridViewColumnType.ComboBox;
+                          var editor = (ComboBoxProperties) c.PropertiesEdit;
+                          editor.TextField = "Naziv";
+                          editor.ValueType = typeof (int);
+                          editor.ValueField = "Id";
+                          editor.DataSource = ViewData["ArtikliBezSinonima"];
+                          c.SetDataItemTemplateContent(tc => ViewContext.Writer.WriteLine(DataBinder.Eval(tc.DataItem, "Naziv")));
+                      });
+    s.SettingsPager.PageSize = 25;
+    s.Width = Unit.Pixel(300);
+    //s.Settings.ShowFilterRow = true;
+    s.SettingsEditing.AddNewRowRouteValues = new { controller = "Sinonimi", action = "DodajArtikalSinonimu", idSinonima = (int)ViewData["IdSinonima"] };
+    s.SettingsEditing.DeleteRowRouteValues = new { controller = "Sinonimi", action = "ObrisiArtikalSinonima", idSinonima = (int)ViewData["IdSinonima"] };
+    s.CommandColumn.SetHeaderTemplateContent(c =>
+                                                 {
+                                                     @Html.DevExpress().HyperLink(l =>
+                                                     {
+                                                         l.Name = "lnkNew";
+                                                         l.Properties.Text = "Dodaj";
+                                                         l.Properties.ClientSideEvents.Click = "function(){gvArtikliSinonima.AddNewRow();}";
+                                                     }).Render();
+                                                 });
+    s.CommandColumn.Visible = true;
+    s.CommandColumn.DeleteButton.Visible = true;
+    s.KeyFieldName = "Id";
+    s.ClientSideEvents.BeginCallback = "gvArtikliSinonimaBeginCallback";
+    s.ClientSideEvents.EndCallback = "function(){gvArtikli.PerformCallback();}";
+    s.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+    s.PreRender = (sender, e) => ((MVCxGridView)sender).StartEdit(-1);
+    s.Style.Add("margin-top", "4px");
+}).Bind(Model).GetHtml()

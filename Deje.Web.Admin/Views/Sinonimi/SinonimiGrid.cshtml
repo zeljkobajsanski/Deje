@@ -1,0 +1,49 @@
+﻿@using System.Web.UI.WebControls
+@using Deje.Core.Model
+@model IEnumerable<Deje.Core.Model.Sinonim>
+
+
+@Html.DevExpress().GridView(s =>
+{
+    s.Name = "gvSinonimi";
+    s.Caption = "Sinonimi";
+    s.CallbackRouteValues = new {Controller = "Sinonimi", Action = "VratiSinonimeCallback"};
+    s.Columns.Add(c =>
+                      {
+                          c.FieldName = "Slika";
+                          c.Caption = "Slika";
+                          c.ColumnType = MVCxGridViewColumnType.Image;
+                          var editor = (ImageEditProperties) c.PropertiesEdit;
+                          editor.ImageWidth = Unit.Pixel(80);
+                          editor.ImageHeight = Unit.Pixel(80);
+                          c.Width = Unit.Pixel(80);
+                      });
+    s.Columns.Add("Naziv");
+    s.SettingsPager.PageSize = 25;
+    s.Width = Unit.Pixel(800);
+    //s.SettingsBehavior.AllowFocusedRow = true;
+    s.Settings.ShowFilterRow = true;
+    s.KeyFieldName = "Id";
+    s.SetEditFormTemplateContent(tc =>
+                                     {
+                                         var model = ViewData["Sinonim"] ?? tc.DataItem;
+                                         ViewData["Sinonim"] = model;
+                                         Html.RenderPartial("SinonimEditor");
+                                     });
+    s.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+    s.CommandColumn.Visible = true;
+    s.CommandColumn.EditButton.Visible = true;
+    s.CommandColumn.DeleteButton.Visible = true;
+    s.CommandColumn.SetHeaderTemplateContent(x =>
+                                                 {
+                                                     @Html.DevExpress().HyperLink(l =>
+                                                     {
+                                                         l.Name = "lnkNew";
+                                                         l.Properties.Text = "Novi";
+                                                         l.Properties.ClientSideEvents.Click = "function() {gvSinonimi.AddNewRow();}";
+                                                     }).Render();
+                                                 });
+    s.SettingsEditing.AddNewRowRouteValues = new {action = "SacuvajSinonim"};
+    s.SettingsEditing.UpdateRowRouteValues = new {action = "SacuvajSinonim"};
+}).Bind(Model).GetHtml()
+      

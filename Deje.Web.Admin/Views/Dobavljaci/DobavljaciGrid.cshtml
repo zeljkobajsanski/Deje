@@ -1,0 +1,42 @@
+﻿@using System.Web.UI.WebControls
+@model IEnumerable<Deje.Core.Model.Dobavljac>
+
+@{
+    var grid = @Html.DevExpress().GridView(s =>
+    {
+        s.Name = "gvDobavljaci";
+        s.Caption = "Dobavljači";
+        s.CallbackRouteValues = new { Controller = "Dobavljaci", Action = "VratiDobavljacePartial" };
+        s.Settings.ShowFilterRow = true;
+        s.KeyFieldName = "Id";
+        //s.CommandColumn.Visible = true;
+        s.Columns.Add(c =>
+                          {
+                              c.FieldName = "Id";
+                              c.Caption = "#";
+                              c.SetHeaderTemplateContent(tc =>
+                              {
+                                  @Html.DevExpress().HyperLink(ls =>
+                                  {
+                                      ls.Name = "lnkNew";
+                                      ls.Properties.Text = "Dodaj novog";
+                                      ls.NavigateUrl = @Url.Action("KreirajNovog", "Dobavljaci");
+                                  }).Render();
+                              });
+                              c.SetDataItemTemplateContent(tc =>
+                                                               {
+                                                                   ViewContext.Writer.Write(@Html.ActionLink("Edit", "Izmeni", new {Id = (int)DataBinder.Eval(tc.DataItem, "Id")}) + "&nbsp" +
+                                                                       @Html.ActionLink("Delete", "Obrisi", new { Id = (int)DataBinder.Eval(tc.DataItem, "Id") }));
+                                                               });
+                              c.CellStyle.HorizontalAlign = HorizontalAlign.Left;
+                          });
+        s.Columns.Add("Naziv", "Naziv");
+        s.Columns.Add("Kontakt.Adresa", "Adresa");
+        s.Columns.Add("Kontakt.Mesto", "Mesto");
+        s.Columns.Add("Status.Naziv", "Status");
+    });
+    grid.Bind(Model).GetHtml();
+}
+
+
+      

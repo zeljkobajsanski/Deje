@@ -1,0 +1,19 @@
+<div data-dx-role="view" data-dx-name="Home" data-dx-title="Deje Mobile">
+    <div data-dx-target-placeholder="content">
+        <div class="dx-fieldset">
+            <div class="dx-field">
+                <div class="full-width" data-bind="dxButton: {text: adress, icon: 'globe'}"></div>
+            </div>
+            <div class="dx-field" data-bind="dxSlider: {value: distance, max: max, step: step}"></div>
+            <div class="dx-field">
+                <div class="dx-field-label">Udaljenost</div>
+                <div class="dx-field-value" data-bind="dxNumberbox: {value: distance}"></div>
+            </div>
+        </div>
+        <div class="dx-field">
+            <div data-bind="dxLookup: { title: 'Delatnost', placeholder: 'Delatnost', dataSource: delatnosti, valueExpr : 'Id', displayExpr : 'Naziv', selectedValue: izabranaDelatnost }"></div>
+        </div>
+        <div class="dx-field" style="left: 50%; margin-left: -47px;" data-bind="dxButton: {text: 'Pretraži', icon: 'find', click: pretrazi}"></div>
+    </div>
+    <div data-dx-role="command" data-bind="dxCommand: {icon: 'refresh', location: 'edit', action: osvezi }"></div>
+</div>

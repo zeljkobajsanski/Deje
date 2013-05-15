@@ -1,0 +1,43 @@
+﻿body {
+    background-color: #f1f1f1;
+    font-family: Segoe UI,Arial,Verdana,Tahoma,sans-serif;
+}
+
+#mainContent {
+    width: 1024px;
+    margin: auto;
+}
+
+nav {
+    float: left;
+    width: 200px;
+    /*border: 2px solid black;*/
+}
+
+div#content {
+    float: left;
+    margin-left: 10px;
+    position: relative;
+}
+
+div.line {
+    clear: both;
+    display: block;
+}
+
+.label {
+    float: left;
+    width: 180px;
+}
+.editor {
+    float: left;
+    width: 180px !important;
+}
+
+.editor, .label {
+    margin: 2px;
+}
+
+.alert {
+    font-size: 14px;
+}

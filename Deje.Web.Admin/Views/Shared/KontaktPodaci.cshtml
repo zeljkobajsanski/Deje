@@ -1,0 +1,68 @@
+﻿@model Deje.Core.Model.Kontakt
+
+<div class="line">
+    @Html.DevExpress().Label(x =>
+                                 {
+                                     x.Text = "Fiksni telefon: ";
+                                     x.AssociatedControlName = "Kontakt.FiksniTelefon";
+                                     x.ControlStyle.CssClass = "label";
+                                 }).GetHtml()
+        
+    @Html.DevExpress().TextBox(textEdit => 
+                                   {
+                                       textEdit.Name = "Kontakt.FiksniTelefon";
+                                       textEdit.Properties.ConvertEmptyStringToNull = true;
+                                       textEdit.ShowModelErrors = true;
+                                       textEdit.ControlStyle.CssClass = "editor";
+                                   }).Bind(Model.FiksniTelefon).GetHtml()
+</div>
+<div class="line">
+    @Html.DevExpress().Label(x =>
+                                 {
+                                     x.Text = "Mobilni telefon: ";
+                                     x.AssociatedControlName = "Kontakt.MobilniTelefon";
+                                     x.ControlStyle.CssClass = "label";
+                                 }).GetHtml()
+        
+    @Html.DevExpress().TextBox(textEdit => 
+                                   {
+                                       textEdit.Name = "Kontakt.MobilniTelefon";
+                                       textEdit.Properties.ConvertEmptyStringToNull = true;
+                                       textEdit.ShowModelErrors = true;
+                                       textEdit.ControlStyle.CssClass = "editor";
+                                   }).Bind(Model.MobilniTelefon).GetHtml()
+</div>
+
+<div class="line">
+    @Html.DevExpress().Label(x =>
+                                 {
+                                     x.Text = "Email: ";
+                                     x.AssociatedControlName = "Kontakt.EMail";
+                                     x.ControlStyle.CssClass = "label";
+                                 }).GetHtml()
+        
+    @Html.DevExpress().TextBox(textEdit => 
+                                   {
+                                       textEdit.Name = "Kontakt.EMail";
+                                       textEdit.Properties.ConvertEmptyStringToNull = true;
+                                       textEdit.ShowModelErrors = true;
+                                       textEdit.ControlStyle.CssClass = "editor";
+                                   }).Bind(Model.EMail).GetHtml()
+</div>
+
+<div class="line">
+    @Html.DevExpress().Label(x =>
+    {
+        x.Text = "Www: ";
+        x.AssociatedControlName = "Kontakt.Www";
+        x.ControlStyle.CssClass = "label";
+    }).GetHtml()
+        
+    @Html.DevExpress().TextBox(textEdit => 
+    {
+        textEdit.Name = "Kontakt.Www";
+        textEdit.Properties.ConvertEmptyStringToNull = true;
+        textEdit.ShowModelErrors = true;
+        textEdit.ControlStyle.CssClass = "editor";
+    }).Bind(Model.Www).GetHtml()
+</div>

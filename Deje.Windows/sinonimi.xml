@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<synonyms>
+  <group>
+    <syn>pizza</syn>
+    <syn>pica</syn>
+    <syn>mađarica</syn>
+    <syn>madjarica</syn>
+  </group>
+  <group>
+    <syn>pljeskavica</syn>
+    <syn>pljeska</syn>
+  </group>
+  <group>
+    <syn>coca</syn>
+    <syn>cola</syn>
+    <syn>koka</syn>
+    <syn>kola</syn>
+    <syn>coke</syn>
+  </group>
+  <group>
+    <syn>bruskete</syn>
+    <syn>brusketi</syn>
+  </group>
+</synonyms>

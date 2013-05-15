@@ -1,0 +1,36 @@
+﻿@using System.Web.UI.WebControls
+@model IEnumerable<Deje.Core.Model.VrstaDobavljaca>
+
+@{
+    var grid = @Html.DevExpress().GridView(x =>
+    {
+        x.Name = "gvVrsteDobavljaca";
+        x.Columns.Add("Naziv");
+        x.Columns.Add("StraniNaziv", "Strani naziv");
+        x.CallbackRouteValues = new {action = "VratiVrsteDobavljacaCallback"};
+        x.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        x.CommandColumn.Visible = true;
+        x.CommandColumn.SetHeaderTemplateContent(tc =>
+        {
+            @Html.DevExpress().HyperLink(ls =>
+            {
+                ls.Name = "newLnk";
+                ls.Properties.Text = "Dodaj nov";
+                ls.Properties.ClientSideEvents.Click = "function(){gvVrsteDobavljaca.AddNewRow();}";
+            }).GetHtml();
+        });
+        x.CommandColumn.EditButton.Visible = true;
+        x.CommandColumn.DeleteButton.Visible = true;
+        x.SettingsEditing.UpdateRowRouteValues = new {action = "Sacuvaj"};
+        x.SettingsEditing.AddNewRowRouteValues = new {action = "Sacuvaj"};
+        x.SettingsEditing.DeleteRowRouteValues = new {action = "Obrisi"};
+        x.KeyFieldName = "Id";
+        x.ClientSideEvents.BeginCallback = "vrsteDobavljacaGridBeginCallback";
+        x.Width = Unit.Pixel(400);
+    });
+    if (ViewBag.Error != null)
+    {
+        grid.SetEditErrorText(ViewBag.Error);
+    }
+    grid.Bind(Model).GetHtml();
+}

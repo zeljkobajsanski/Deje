@@ -1,0 +1,43 @@
+﻿@using System.Web.UI.WebControls
+@model IEnumerable<Deje.Core.Model.StatusDobavljaca>
+
+@{
+    var grid = @Html.DevExpress().GridView(s =>
+    {
+        s.Name = "gvStatusiDobavljaca";
+        s.Caption = "Statusi dobavljača";
+        s.CallbackRouteValues = new {Controller = "Statusi", Action = "VratiStatuseDobavljacaCallback"};
+        s.Width = Unit.Pixel(400);
+        s.KeyFieldName = "Id";
+        s.Columns.Add("Naziv", "Naziv");
+        s.Columns.Add(c =>
+        {
+            c.FieldName = "PrikaziNaPretragama";
+            c.Caption = "Prikaži na pretragama";
+            c.ColumnType = MVCxGridViewColumnType.CheckBox;
+            var editor = c.PropertiesEdit as CheckBoxProperties;
+            editor.AllowGrayed = false;
+            editor.ClientSideEvents.Init = "function(s, e){ s.SetCheckState('Checked'); }";
+        });
+        s.SettingsEditing.AddNewRowRouteValues = new {action = "SacuvajStatusDobavljaca"};
+        s.SettingsEditing.UpdateRowRouteValues = new {action = "SacuvajStatusDobavljaca"};
+        s.SettingsEditing.DeleteRowRouteValues = new {action = "ObrisiStatusDobavljaca"};
+        s.CommandColumn.Visible = true;
+        s.CommandColumn.SetHeaderTemplateContent(tc =>
+                                                    {
+                                                        @Html.DevExpress().HyperLink(ls =>
+                                                        {
+                                                            ls.Name = "newLink";
+                                                            ls.Properties.Text = "Dodaj novi";
+                                                            ls.Properties.ClientSideEvents.Click = "function(){ gvStatusiDobavljaca.AddNewRow(); }";
+                                                        }).GetHtml();
+                                                    });
+        s.CommandColumn.EditButton.Visible = true;
+        s.CommandColumn.DeleteButton.Visible = true;
+        s.SettingsEditing.Mode = GridViewEditingMode.Inline;
+    });
+    grid.Bind(Model).GetHtml();
+}
+
+
+      

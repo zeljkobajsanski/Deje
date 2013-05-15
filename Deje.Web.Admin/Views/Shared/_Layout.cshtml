@@ -1,0 +1,135 @@
+@using Deje.Core.Status
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href='@Url.Content("~/Content/styles/site.css")' rel="stylesheet" />
+    <link href='@Url.Content("~/Content/bootstrap/bootstrap.min.css")' rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/global.js")" type="text/javascript"></script>
+    <script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0">
+    </script>
+
+    @Html.DevExpress().GetStyleSheets( 
+    new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout }, 
+    new StyleSheet { ExtensionSuite = ExtensionSuite.Editors }, 
+    new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor }, 
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }, 
+    new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.Chart },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
+	new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler }
+)
+@Html.DevExpress().GetScripts( 
+    new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout }, 
+    new Script { ExtensionSuite = ExtensionSuite.HtmlEditor }, 
+    new Script { ExtensionSuite = ExtensionSuite.GridView }, 
+    new Script { ExtensionSuite = ExtensionSuite.PivotGrid },
+    new Script { ExtensionSuite = ExtensionSuite.Editors }, 
+    new Script { ExtensionSuite = ExtensionSuite.Chart },
+    new Script { ExtensionSuite = ExtensionSuite.Report },
+	new Script { ExtensionSuite = ExtensionSuite.Scheduler }
+)
+</head>
+
+    <body>
+        <section id="mainContent">
+            <nav>
+                @Html.DevExpress().NavBar(settings =>
+                                              {
+                                                  settings.Name = "navbar";
+                                                  //settings.Groups.Add(g =>
+                                                  //                        {
+                                                  //                            g.Text = "Administracija";
+                                                                          
+                                                                          
+                                                  //                        });
+                                                  settings.Groups.Add(g =>
+                                                                          {
+                                                                              g.Text = "Dobavljaèi";
+                                                                              g.Items.Add(i =>
+                                                                                              {
+                                                                                                  i.Text = "Delatnosti";
+                                                                                                  i.NavigateUrl = @Url.Action("Index", "Delatnosti");
+                                                                                              });
+                                                                              g.Items.Add(i =>
+                                                                                              {
+                                                                                                  i.Text = "Vrste dobavljaèa";
+                                                                                                  i.NavigateUrl = @Url.Action("Index", "VrsteDobavljaca");
+                                                                                              });
+                                                                              g.Items.Add(i =>
+                                                                                              {
+                                                                                                  i.Text = "Statusi dobavljaèa";
+                                                                                                  i.NavigateUrl = @Url.Action("Dobavljaci", "Statusi");
+                                                                                              });
+                                                                              g.Items.Add(i =>
+                                                                                              {
+                                                                                                  i.Text = "Dobavljaèi";
+                                                                                                  i.NavigateUrl = @Url.Action("Index", "Dobavljaci");
+                                                                                              });
+                                                                              g.Items.Add(i =>
+                                                                                              {
+                                                                                                  i.Text = "Pretraga dobavljaèa";
+                                                                                                  i.NavigateUrl = @Url.Action("Pretraga", "Dobavljaci");
+                                                                                              });
+                                                                          });
+                                                  settings.Groups.Add(g =>
+                                                                          {
+                                                                              g.Text = "Artikli";
+                                                                              g.Items.Add(i =>
+                                                                                              {
+                                                                                                  i.Text = "Kategorije artikala";
+                                                                                                  i.NavigateUrl = @Url.Action("Index", "KategorijeArtikala");
+                                                                                              });
+                                                                              g.Items.Add(i =>
+                                                                                              {
+                                                                                                  i.Text = "Artikli";
+                                                                                                  i.NavigateUrl = @Url.Action("Index", "Artikli");
+                                                                                              });
+                                                                              g.Items.Add(i =>
+                                                                              {
+                                                                                  i.Text = "Sinonimi";
+                                                                                  i.NavigateUrl = @Url.Action("Index", "Sinonimi");
+                                                                              });
+                                                                              g.Items.Add(i =>
+                                                                              {
+                                                                                  i.Text = "Artikli sinonima";
+                                                                                  i.NavigateUrl = @Url.Action("Artikli", "Sinonimi");
+                                                                              });
+                                                                          });
+                                              }).GetHtml()
+            </nav>
+            
+            <div id="content">
+                @if (TempData["Status"] != null) {
+                    <div class="alert">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <strong>@(((StatusMessage) TempData["Status"]).TypeDescription)</strong> @(((StatusMessage) TempData["Status"]).Message)
+                    </div>
+                    switch (((StatusMessage)TempData["Status"]).StatusType)
+                    {
+                        case StatusType.Success:
+                            <script>
+                                $(".alert").addClass('alert-success');
+                            </script>
+                        break;
+                        case StatusType.Error:
+                            <script>
+                                $(".alert").addClass('alert-error');
+                            </script>
+                        break;
+                        case StatusType.Info:
+                            <script>
+                                $(".alert").addClass('alert-info');
+                            </script>
+                        break;
+                    }
+                }
+                @RenderBody()    
+            </div>
+        </section>
+    </body>
+</html>

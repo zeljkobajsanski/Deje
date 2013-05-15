@@ -1,0 +1,191 @@
+﻿@using System.Web.UI.WebControls
+@using Deje.Core.Model
+@model Deje.Core.Model.Artikal
+
+@{
+    ViewBag.Title = Model.Id == 0 ? "Novi artikal" : Model.Naziv;
+}
+<script>
+    function kopirajArtikalClick(s, e) {
+        gvPretragaArtikala.PerformCallback();
+    }
+
+    function gvPretragaArtikalaBeginCallback(s, e) {
+        e.customArgs['idDobavljaca'] = $("#IdDobavljaca").val();
+    }
+</script>
+
+
+@using (Html.BeginForm("SacuvajArtikal", "Artikli", FormMethod.Post, new { @class = "edit_form" }))
+{
+    <div style="float: left; width: 200px;">
+        <div class="line">
+        @Html.DevExpress().HyperLink(x =>
+        {
+            x.Name = "lnknNazad";
+            x.Properties.Text = "Nazad";
+            x.NavigateUrl = @Url.Action("Index", "Artikli", new {Model.IdDobavljaca});
+        }).GetHtml()
+        @Html.HiddenFor(x => x.Slika)
+
+        @Html.DevExpress().Image(x =>
+                                     {
+                                         x.Name = "Slika";
+                                         x.Width = Unit.Pixel(200);
+                                         x.Height = Unit.Pixel(210);
+                                     }).Bind(Model.Slika).GetHtml()
+        @Html.DevExpress().UploadControl(x =>
+                                             {
+                                                 x.Name = "slikaUploadControl";
+                                                 x.ValidationSettings.AllowedFileExtensions = new[]{".jpg", ".png"};
+                                                 x.Width = Unit.Pixel(200);
+                                             }).GetHtml()
+    </div>
+    </div>
+
+    <div style="float: left; margin: 0 0 0 10px;">
+        
+        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.IdDobavljaca)
+        <div class="line" style="margin-bottom: 18px;">
+            @Html.DevExpress().HyperLink(x =>
+                                             {
+                                                 x.Name = "lnkKopiraj";
+                                                 x.Properties.Text = "Kopiraj";
+                                                 x.Properties.ClientSideEvents.Click = "kopirajArtikalClick";
+                                                 x.ControlStyle.Cursor = "pointer";
+                                             }).GetHtml()
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(x =>
+                                         {
+                                             x.Text = "Dobavljač: ";
+                                             x.AssociatedControlName = "NazivDobavljaca";
+                                             x.ControlStyle.CssClass = "label";
+                                         }).GetHtml()
+            @Html.DevExpress().TextBox(textEdit => 
+                                           {
+                                               textEdit.Name = "NazivDobavljaca";
+                                               textEdit.ControlStyle.CssClass = "editor";
+                                               textEdit.ReadOnly = true;
+                                           }).Bind(Model.Dobavljac.Naziv).GetHtml()
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(label =>
+                                         {
+                                             label.Text = "Kategorija artikla: ";
+                                             label.ControlStyle.CssClass = "label";
+                                             label.AssociatedControlName = "IdKategorijeArtikle";
+                                         }).GetHtml()
+      
+            @Html.DevExpress().ComboBox(s =>
+                                            {
+                                                s.Name = "IdKategorijeArtikla";
+                                                s.ShowModelErrors = true;
+                                                s.Properties.DropDownRows = 30;
+                                                s.Properties.ValueType = typeof(int);
+                                                s.Properties.ValueField = "Id";
+                                                s.Properties.TextField = "Naziv";
+                                                s.ControlStyle.CssClass = "editor";
+                                            }).BindList(ViewBag.KategorijeArtikala).Bind(Model.IdKategorijeArtikla).GetHtml()
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(label =>
+                                         {
+                                             label.Text = "Naziv artikla: ";
+                                             label.ControlStyle.CssClass = "label";
+                                             label.AssociatedControlName = "Naziv";
+                                         }).GetHtml()
+      
+            @Html.DevExpress().TextBox(textEdit => 
+                                           {
+                                               textEdit.Name = "Naziv";
+                                               textEdit.Properties.ConvertEmptyStringToNull = true;
+                                               textEdit.ShowModelErrors = true;
+                                               textEdit.ControlStyle.CssClass = "editor";
+                                           }).Bind(Model.Naziv).GetHtml()
+        </div>
+        <div class="line">
+        
+            @Html.DevExpress().Label(label =>
+                                         {
+                                             label.Text = "Cena: ";
+                                             label.ControlStyle.CssClass = "label";
+                                             label.AssociatedControlName = "Cena";
+                                         }).GetHtml()
+            @Html.DevExpress().SpinEdit(x =>
+                                            {
+                                                x.Name = "Cena";
+                                                x.ShowModelErrors = true;
+                                                x.Properties.MinValue = 0;
+                                                x.Properties.NumberType = SpinEditNumberType.Float;
+                                                x.Properties.NumberFormat = SpinEditNumberFormat.Number;
+                                                x.Properties.DecimalPlaces = 2;
+                                                x.Properties.SpinButtons.ShowIncrementButtons = false;
+                                                x.Properties.DisplayFormatString = "n2";
+                                                x.ControlStyle.CssClass = "editor";
+                                                x.Properties.AllowMouseWheel = false;
+                                                x.ControlStyle.HorizontalAlign = HorizontalAlign.Right;
+                                            }).Bind(Model.Cena).GetHtml()
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(label =>
+                                         {
+                                             label.Text = "Opis: ";
+                                             label.ControlStyle.CssClass = "label";
+                                             label.AssociatedControlName = "Opis";
+                                         }).GetHtml()
+            <div style="clear: left; width: 394px;">
+                @Html.DevExpress().Memo(x =>
+                                        {
+                                            x.Name = "Opis";
+                                            //x.ControlStyle.CssClass = "editor";
+                                            x.ShowModelErrors = true;
+                                            x.Width = Unit.Percentage(100);
+                                            x.Height = Unit.Pixel(100);
+                                        }).Bind(Model.Opis).GetHtml()
+            </div>
+            
+        </div>
+        
+        <div class="line">
+            @Html.DevExpress().Label(label =>
+                                         {
+                                             label.Text = "Aktivan: ";
+                                             label.ControlStyle.CssClass = "label";
+                                             label.AssociatedControlName = "Aktivan";
+                                         }).GetHtml()
+            @Html.DevExpress().CheckBox(x =>
+                                            {
+                                                x.Name = "Aktivan";
+                                                x.ControlStyle.CssClass = "editor";
+                                            }).Bind(Model.Aktivan).GetHtml()
+        </div>
+        <div class="line">
+            
+            @Html.DevExpress().Button(x =>
+                                          {
+                                              x.Name = "btnSacuvaj";
+                                              x.Text = "Sačuvaj";
+                                              x.UseSubmitBehavior = true;
+                                              //x.Style.Add("float", "right");
+                                              //x.Style.Add("margin-right", "128px");
+                                          }).GetHtml()
+        </div>
+    </div>
+}
+
+@Html.DevExpress().PopupControl(x =>
+{
+    x.Name = "pretragaArtikalaPopup";
+    x.Modal = true;
+    x.PopupVerticalAlign = PopupVerticalAlign.Above;
+    x.PopupHorizontalAlign = PopupHorizontalAlign.OutsideRight;
+    x.HeaderText = "Izbor artikla";
+    x.PopupElementID = "lnkKopiraj";
+    x.SetContent(() =>
+                     {
+                         @Html.RenderPartial("PretragaArtikalaGrid", Enumerable.Empty<Artikal>());
+                     });
+    x.Width = Unit.Pixel(600);
+}).GetHtml()

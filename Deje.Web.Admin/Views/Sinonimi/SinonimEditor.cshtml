@@ -1,0 +1,81 @@
+﻿@using System.Web.UI.WebControls
+
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.Hidden("Slika", DataBinder.Eval(ViewData["Sinonim"], "Slika"))
+    <div style="float: left; width: 200px;">
+        @Html.DevExpress().Image(x =>
+                                     {
+                                         x.ImageUrl = (string) DataBinder.Eval(ViewData["Sinonim"], "Slika");
+                                         x.Height = Unit.Pixel(80);
+                                         x.Width = Unit.Pixel(80);
+                                     }).GetHtml()
+        @if (null != DataBinder.Eval(ViewData["Sinonim"], "Id")) 
+        {
+            @Html.DevExpress().UploadControl(x =>
+            {
+                x.Name = "slikaUpload";
+                x.CallbackRouteValues = new { controller = "Sinonimi", action = "SacuvajSliku", id = DataBinder.Eval(ViewData["Sinonim"], "Id") };
+                x.ShowUploadButton = true;
+                x.UploadMode = UploadControlUploadMode.Standard;
+                x.ClientSideEvents.FileUploadComplete = "function(){gvSinonimi.CancelEdit();}";
+                x.Width = Unit.Pixel(200);
+            }).GetHtml()
+        }
+    </div>
+    <div style="float: left;">
+        <div class="line">
+            @Html.DevExpress().Label(label =>
+            {
+                label.Text = "Naziv: ";
+                label.ControlStyle.CssClass = "label";
+                label.AssociatedControlName = "Naziv";
+            }).GetHtml()
+
+            @Html.DevExpress().TextBox(textEdit => 
+            {
+                textEdit.Name = "Naziv";
+                textEdit.Properties.ConvertEmptyStringToNull = true;
+                textEdit.ShowModelErrors = true;
+                textEdit.ControlStyle.CssClass = "editor";
+            }).Bind(DataBinder.Eval(ViewData["Sinonim"], "Naziv")).GetHtml()
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(label =>
+            {
+                label.Text = "Opis: ";
+                label.ControlStyle.CssClass = "label";
+                label.AssociatedControlName = "Opis";
+            }).GetHtml()
+
+            @Html.DevExpress().Memo(textEdit => 
+            {
+                textEdit.Name = "Opis";
+                textEdit.Properties.ConvertEmptyStringToNull = true;
+                textEdit.ShowModelErrors = true;
+                textEdit.ControlStyle.CssClass = "editor";
+                textEdit.Height = Unit.Pixel(150);
+            }).Bind(DataBinder.Eval(ViewData["Sinonim"], "Opis")).GetHtml()
+        </div>
+
+        <div class="line" style="text-align:right; padding-right: 30px;">
+            @Html.DevExpress().HyperLink(s =>
+            {
+                s.Name = "btnOtkazi";
+                s.Properties.Text = "Otkaži";
+                s.ControlStyle.Cursor = "pointer";
+                s.Properties.ClientSideEvents.Click = "function() { gvSinonimi.CancelEdit();}";
+            }).GetHtml()
+            
+            @Html.DevExpress().HyperLink(s =>
+            {
+                s.Name = "btnSacuvaj";
+                s.Properties.Text = "Sačuvaj";
+                s.ControlStyle.Cursor = "pointer";
+                s.Properties.ClientSideEvents.Click = "function() { gvSinonimi.UpdateEdit();}";
+            }).GetHtml()
+        </div>
+    </div>
+}
+      

@@ -1,0 +1,45 @@
+﻿.red {
+    color: red;
+}
+.pushpin {
+    width: 150px;
+    height: 60px;
+    background-color: white;
+    padding: 10px;
+    -webkit-box-shadow: 4px 4px 15px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    4px 4px 15px rgba(50, 50, 50, 0.75);
+    box-shadow:         4px 4px 15px rgba(50, 50, 50, 0.75);
+}
+.pushpin p {
+    padding: 0;
+    margin: 2px;
+    font-size: 12px;
+}
+.pushpin p.naziv {
+    font-weight: bold;
+}
+.pushpin a{
+    float: right;
+    font-size: 10px;
+    cursor: pointer;
+}
+#dobavljacNazivIOpis {
+    margin: 0 0 0 4px;
+}
+#nazivDobavljaca, #opisDobavljaca {
+    margin: 0 0 4px 0;
+}
+#opisDobavljaca {
+    text-align: justify;
+    font-style: italic;
+}
+header h1 {
+    cursor: pointer;
+}
+
+.background {
+            
+}
+.logo {
+    float: left; margin: 3px;
+}

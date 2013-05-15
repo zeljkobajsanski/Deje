@@ -1,0 +1,96 @@
+﻿@using System.Web.UI.WebControls
+@model IEnumerable<Deje.Core.Model.Artikal>
+
+
+@{
+    var grid = Html.DevExpress().GridView(s =>
+                                   {
+                                       s.Name = "gvArtikli";
+                                       s.Caption = "Artikli";
+                                       s.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+                                       s.CallbackRouteValues = new {Action = "Index"};
+                                       s.SettingsCookies.Enabled = true;
+                                       s.SettingsCookies.StorePaging = true;
+                                       s.SettingsLoadingPanel.ShowImage = true;
+                                       s.SettingsLoadingPanel.Text = "Učitavam...";
+                                       s.SettingsLoadingPanel.Mode = GridViewLoadingPanelMode.ShowOnStatusBar;
+                                       s.Columns.Add(c =>
+                                                         {
+                                                             c.Width = Unit.Pixel(20);
+                                                             c.SetDataItemTemplateContent(tc =>
+                                                                                              {
+
+                                                                                                  var id = DataBinder.Eval(tc.DataItem, "Id");
+                                                                                                  @Html.DevExpress().HyperLink(l =>
+                                                                                                                                   {
+                                                                                                                                       l.Name = "Edit_" + id;
+                                                                                                                                       l.Properties.ImageUrl = @Url.Content("~/Content/Images/edit.png");
+                                                                                                                                       l.ToolTip = "Izmeni";
+                                                                                                                                       l.NavigateUrl = "Artikli/" + id;
+                                                                                                                                   }).Render();
+                                                                                              });
+                                                         });
+                                       s.Columns.Add(c =>
+                                                         {
+                                                             c.FieldName = "Slika";
+                                                             c.Caption = "Slika";
+                                                             c.ColumnType = MVCxGridViewColumnType.Image;
+                                                             var editor = (ImageEditProperties) c.PropertiesEdit;
+                                                             editor.ImageWidth = Unit.Pixel(80);
+                                                             editor.ImageHeight = Unit.Pixel(80);
+                                                             editor.EmptyImage.Url = @Url.Content("~/Content/Images/photo_missing.jpg");
+                                                             c.Width = Unit.Pixel(80);
+                                                             c.Settings.AllowAutoFilter = DefaultBoolean.False;
+                                                         });
+
+                                       s.Columns.Add(c =>
+                                                         {
+                                                             c.FieldName = "Naziv";
+                                                             c.Caption = "Naziv artikla";
+                                                             c.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+                                                             c.CellStyle.CssClass = "bold";
+                                                         });
+                                       s.Columns.Add(c =>
+                                                         {
+                                                             c.FieldName = "IdKategorijeArtikla";
+                                                             c.Caption = "Vrsta artikla";
+                                                             c.ColumnType = MVCxGridViewColumnType.ComboBox;
+                                                             var editor = (ComboBoxProperties) c.PropertiesEdit;
+                                                             editor.TextField = "Naziv";
+                                                             editor.ValueField = "Id";
+                                                             editor.ValueType = typeof (int);
+                                                             editor.DataSource = ViewBag.KategorijeArtikala;
+                                                             editor.DropDownStyle = DropDownStyle.DropDown;
+                                                             c.Width = Unit.Pixel(150);
+                                                         });
+                                       s.Columns.Add(c =>
+                                                         {
+                                                             c.FieldName = "Cena";
+                                                             c.ColumnType = MVCxGridViewColumnType.TextBox;
+                                                             var editor = (TextEditProperties) c.PropertiesEdit;
+                                                             editor.DisplayFormatString = "n2";
+                                                             c.Width = Unit.Pixel(80);
+                                                             c.Settings.AllowAutoFilter = DefaultBoolean.False;
+                                                         });
+                                       s.Columns.Add(c =>
+                                                         {
+                                                             c.FieldName = "Aktivan";
+                                                             c.ColumnType = MVCxGridViewColumnType.CheckBox;
+                                                             c.Width = Unit.Pixel(50);
+                                                             c.Settings.AllowAutoFilter = DefaultBoolean.False;
+                                                         });
+                                       //s.SettingsBehavior.AllowGroup = true;
+                                       //s.Settings.ShowGroupPanel = true;
+                                       s.SettingsPager.PageSize = 5;
+                                       s.Width = Unit.Percentage(100);
+                                       //s.SettingsBehavior.AllowFocusedRow = true;
+                                       s.Settings.ShowFilterRow = true;
+                                       s.KeyFieldName = "Id";
+                                       //s.ClientSideEvents.FocusedRowChanged = "";
+                                       s.SetStatusBarTemplateContent(tc => @Html.RenderPartial("GridStatusPartial"));
+                                       
+                                   });   
+    grid.Bind(Model).GetHtml();
+}
+
+      

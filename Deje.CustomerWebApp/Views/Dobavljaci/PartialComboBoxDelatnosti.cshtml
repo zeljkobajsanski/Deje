@@ -1,0 +1,13 @@
+﻿@using System.Web.UI.WebControls
+@model int?
+
+@Html.DevExpress().ComboBox(s =>
+                                {
+                                    s.Name = "IdDelatnosti";
+                                    s.Properties.TextField = "Naziv";
+                                    s.Properties.ValueType = typeof (int);
+                                    s.Properties.ValueField = "Id";
+                                    s.ControlStyle.CssClass = "editor";
+                                    s.Width = Unit.Pixel(198);
+                                    s.Properties.ClientSideEvents.ValueChanged = "IdDelatnostiValueChanged";
+                                }).BindList(ViewBag.Delatnosti).Bind(Model).GetHtml()

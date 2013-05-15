@@ -1,0 +1,26 @@
+﻿@using Deje.Core.Status
+@{
+    if (TempData["Status"] != null)
+    {
+        <div style="float: left">
+            @{
+                var status = (StatusMessage) TempData["Status"];
+                switch (status.StatusType)
+                {
+                    case StatusType.Warning:
+                        <img src="@Url.Content("~/Content/Images/img_trans.png")" alt="" height="20" width="20" class="warning"/>
+                        break;
+                    case StatusType.Error:
+                        <img src="@Url.Content("~/Content/Images/img_trans.png")" alt="" height="20" width="20" class="error"/>
+                        break;
+                    case StatusType.Success:
+                        <img src="@Url.Content("~/Content/Images/img_trans.png")" alt="" height="20" width="20" class="info"/>
+                        break;
+                }
+            }
+        
+            <span class="status">@status.Message</span>    
+        </div>
+        
+    }
+}

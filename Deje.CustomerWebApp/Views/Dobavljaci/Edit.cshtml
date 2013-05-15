@@ -1,0 +1,234 @@
+﻿@using System.Globalization
+@using System.Web.UI.WebControls
+@using Deje.CustomerWebApp.Utils.PartialMagic.Mvc
+@model Deje.Core.Model.Dobavljac
+
+@{
+    ViewBag.Title = "Dobavljač";
+    var width = Unit.Pixel(198);
+}
+
+@using (Html.BeginForm("Edit", "Dobavljaci", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.Slika)
+    @Html.HiddenFor(x => x.GpsLatitude)
+    @Html.HiddenFor(x => x.GpsLongitude)
+    <div class="left">
+        @Html.DevExpress().Image(s =>
+                                     {
+                                         s.Properties.EmptyImage.Url = @Url.Content("~/Content/Images/photo_missing.jpg");
+                                         s.Width = Unit.Pixel(80);
+                                     }).Bind(Model.Slika).GetHtml()
+    
+    </div>
+    
+    <div id="mapa">
+        
+    </div>
+    
+    <div class="form">
+        <div class="line">
+            @Html.DevExpress().Label(s =>
+                                         {
+                                             s.Text = "Naziv";
+                                             s.AssociatedControlName = "Naziv";
+                                             s.ControlStyle.CssClass = "labela";
+                                         }).GetHtml()
+            @Html.DevExpress().TextBox(s =>
+                                           {
+                                               s.Name = "Naziv";
+                                               s.ShowModelErrors = true;
+                                               s.ControlStyle.CssClass = "editor";
+                                               s.Width = width;
+                                           }).Bind(Model.Naziv).GetHtml()
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(s =>
+                                         {
+                                             s.Text = "Delatnost";
+                                             s.AssociatedControlName = "IdDelatnosti";
+                                             s.ControlStyle.CssClass = "labela";
+                                         }).GetHtml()
+            @Html.Partial("PartialComboBoxDelatnosti", Model.IdDelatnosti)
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(s =>
+                                         {
+                                             s.Text = "Vrsta";
+                                             s.AssociatedControlName = "IdVrsteDobavljaca";
+                                             s.ControlStyle.CssClass = "labela";
+                                         }).GetHtml()
+            @Html.Partial("PartialComboBoxVrsteDobavljaca", Model.IdVrsteDobavljaca)
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(s =>
+                                         {
+                                             s.Text = "Opis";
+                                             s.AssociatedControlName = "Opis";
+                                             s.ControlStyle.CssClass = "labela";
+                                         }).GetHtml()
+            @Html.DevExpress().Memo(s =>
+                                        {
+                                            s.Name = "Opis";
+                                            s.ShowModelErrors = true;
+                                            s.Height = Unit.Pixel(120);
+                                            s.Width = width;
+                                            s.ControlStyle.CssClass = "editor";
+                                        }).Bind(Model.Opis).GetHtml()
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(s =>
+                                         {
+                                             s.Text = "Slika";
+                                             s.AssociatedControlName = "SlikaUpload";
+                                             s.ControlStyle.CssClass = "labela";
+                                         }).GetHtml()
+            @Html.DevExpress().UploadControl(s =>
+                                                 {
+                                                     s.Name = "SlikaUpload";
+                                                     s.BrowseButton.Text = "Učitaj...";
+                                                     s.Width = width;
+                                                     s.ControlStyle.CssClass = "editor";
+                                                     s.ShowClearFileSelectionButton = true;
+                                                     s.UploadMode = UploadControlUploadMode.Standard; 
+                                                 }).GetHtml()
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(s =>
+                                         {
+                                             s.Text = "Status";
+                                             s.AssociatedControlName = "IdStatusa";
+                                             s.ControlStyle.CssClass = "labela";
+                                         }).GetHtml()
+            @Html.DevExpress().ComboBox(s =>
+                                            {
+                                                s.Name = "IdStatusa";
+                                                s.ShowModelErrors = true;
+                                                s.ControlStyle.CssClass = "editor";
+                                                s.Width = width;
+                                                s.Properties.TextField = "Naziv";
+                                                s.Properties.ValueType = typeof (int);
+                                                s.Properties.ValueField = "Id";
+                                                s.ReadOnly = true;
+                                            }).BindList(ViewBag.Statusi).Bind(Model.IdStatusa).GetHtml()
+        </div>
+        <div class="line">
+            <p class="separator">Kontakt podaci</p>
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(s =>
+                                         {
+                                             s.Text = "Mesto";
+                                             s.AssociatedControlName = "Kontakt.Mesto";
+                                             s.ControlStyle.CssClass = "labela";
+                                         }).GetHtml()
+            @Html.DevExpress().TextBox(s =>
+                                           {
+                                               s.Name = "Kontakt.Mesto";
+                                               s.Properties.ClientInstanceName = "Mesto";
+                                               s.ControlStyle.CssClass = "editor";
+                                               s.ShowModelErrors = true;
+                                               s.Width = width;
+                                               s.Properties.ClientSideEvents.ValueChanged = "pronadjiAdresu";
+                                           }).Bind(Model.Kontakt.Mesto).GetHtml()
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(s =>
+                                         {
+                                             s.Text = "Adresa";
+                                             s.AssociatedControlName = "Kontakt.Adresa";
+                                             s.ControlStyle.CssClass = "labela";
+                                         }).GetHtml()
+            @Html.DevExpress().TextBox(s =>
+                                           {
+                                               s.Name = "Kontakt.Adresa";
+                                               s.Properties.ClientInstanceName = "Adresa";
+                                               s.ControlStyle.CssClass = "editor";
+                                               s.ShowModelErrors = true;
+                                               s.Width = width;
+                                               s.Properties.ClientSideEvents.ValueChanged = "pronadjiAdresu";
+                                           }).Bind(Model.Kontakt.Adresa).GetHtml()
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(s =>
+                                         {
+                                             s.Text = "Fiksni telefon";
+                                             s.AssociatedControlName = "Kontakt.FiksniTelefon";
+                                             s.ControlStyle.CssClass = "labela";
+                                         }).GetHtml()
+            @Html.DevExpress().TextBox(s =>
+                                           {
+                                               s.Name = "Kontakt.FiksniTelefon";
+                                               s.ControlStyle.CssClass = "editor";
+                                               s.ShowModelErrors = true;
+                                               s.Width = width;
+                                           }).Bind(Model.Kontakt.FiksniTelefon).GetHtml()
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(s =>
+                                         {
+                                             s.Text = "Mobilni telefon";
+                                             s.AssociatedControlName = "Kontakt.MobilniTelefon";
+                                             s.ControlStyle.CssClass = "labela";
+                                         }).GetHtml()
+            @Html.DevExpress().TextBox(s =>
+                                           {
+                                               s.Name = "Kontakt.MobilniTelefon";
+                                               s.ControlStyle.CssClass = "editor";
+                                               s.ShowModelErrors = true;
+                                               s.Width = width;
+                                           }).Bind(Model.Kontakt.MobilniTelefon).GetHtml()
+        </div>
+        <div class="line">
+                @Html.DevExpress().Label(s =>
+                                             {
+                                                 s.Text = "Web site";
+                                                 s.AssociatedControlName = "Kontakt.Www";
+                                                 s.ControlStyle.CssClass = "labela";
+                                             }).GetHtml()
+                @Html.DevExpress().TextBox(s =>
+                                               {
+                                                   s.Name = "Kontakt.Www";
+                                                   s.ControlStyle.CssClass = "editor";
+                                                   s.ShowModelErrors = true;
+                                                   s.Width = width;
+                                               }).Bind(Model.Kontakt.Www).GetHtml()
+        </div>
+
+        
+        <div class="buttons_line">
+            @*<div class="separator"></div>*@
+            
+            @Html.DevExpress().Button(s =>
+                                          {
+                                              s.Name = "Submit";
+                                              s.Text = "Sačuvaj";
+                                              s.UseSubmitBehavior = true;
+                                              s.ControlStyle.CssClass = "form_button";
+                                          }).GetHtml()
+            @Html.DevExpress().Button(s =>
+                                          {
+                                              var link = @Url.Action("Edit");
+                                              s.Name = "Back";
+                                              s.Text = "Nazad";
+                                              s.ClientSideEvents.Click = "function(){window.location='" + link + "'}";
+                                              s.ControlStyle.CssClass = "form_button";
+                                          }).GetHtml()    
+        </div>
+        <div class="line" style="margin-top: 48px;">
+            @Html.Partial("GridStatusPartial")
+        </div>
+
+
+
+    </div>
+}
+ 
+
+@section scripts
+{
+    <script charset="UTF-8" type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcdf5bk8_wFGfPjt4w-aVHJX_EYTm-9TI&sensor=false"></script>
+    <script src="@Url.Content("~/Scripts/dobavljac.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/mapa.js")" type="text/javascript"></script>
+}    

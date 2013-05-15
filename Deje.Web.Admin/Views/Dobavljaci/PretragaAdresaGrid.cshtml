@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Deje.Web.Admin.Model.RezultatPretrage>
+
+
+@Html.DevExpress().GridView(s =>
+{
+    s.Name = "gvPretragaAdresa";
+    s.Caption = "Rezultati pretrage";
+    s.CallbackRouteValues = new {Controller = "Dobavljaci", Action = "VratiRezultatePretrageCallback"};
+    s.ClientSideEvents.BeginCallback = "pretragaAdresaBeginCallback";
+    s.Columns.Add(c =>
+                      {
+                          c.Caption = "#";
+                          c.SetDataItemTemplateContent(tc =>
+                                                           {
+                                                               @Html.DevExpress().HyperLink(ls =>
+                                                                                                {
+                                                                                                    var latitude = DataBinder.Eval(tc.DataItem, "Latituda");
+                                                                                                    var longitude = DataBinder.Eval(tc.DataItem, "Longituda");
+                                                                                                    ls.Name = "lnkIzaberi_" + latitude + longitude;
+                                                                                                    ls.Properties.Text = "Izaberi";
+                                                                                                    ls.Properties.ClientSideEvents.Click = string.Format("function(){{izaberi({0}, {1})}}", latitude, longitude);
+                                                                                                    ls.ControlStyle.Cursor = "pointer";
+                                                                                                }).Render();
+                                                           });
+                      });
+    s.Columns.Add("Adresa");
+    s.Columns.Add("Latituda");
+    s.Columns.Add("Longituda");
+}).Bind(Model).GetHtml()
+      

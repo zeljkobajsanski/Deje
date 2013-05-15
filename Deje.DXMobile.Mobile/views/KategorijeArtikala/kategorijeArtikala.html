@@ -1,0 +1,12 @@
+﻿<div data-dx-role="view" data-dx-name="KategorijeArtikala" data-dx-title="Kategorije artikala">
+    <div data-dx-target-placeholder="content">
+        <div data-bind="dxList: { items: kategorije, scrolling: true }">
+            <div data-dx-name="item" data-dx-role="template" data-bind="dxAction: '#Artikli/{id}'">
+                <span style="float: left" data-bind="text: naziv"></span>
+                <span style="float: right" data-bind="text: count"></span>
+            </div>
+        </div>
+        <div data-bind="dxLoadIndicator: { message: 'Molim sačekajte...', loading: busy }"></div>
+        
+    </div>
+</div>

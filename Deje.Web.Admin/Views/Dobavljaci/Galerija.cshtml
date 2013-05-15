@@ -1,0 +1,34 @@
+﻿@using System.Web.UI.WebControls
+@model Deje.Core.Model.Dobavljac
+
+
+<div style="overflow: auto">
+    <div class="line">
+    
+    @using (Html.BeginForm("DodajUGaleriju", "Dobavljaci", FormMethod.Post, new Dictionary<string, object>{{"id", "galerijaForm"}}))
+    {
+        @Html.HiddenFor(x => x.Id)
+        @Html.DevExpress().UploadControl(x =>
+                                             {
+                                                 x.Name = "upload";
+                                                 x.AdvancedModeSettings.EnableMultiSelect = true;
+                                                 x.Width = Unit.Pixel(400);
+                                                 x.ShowUploadButton = true;
+                                                 x.ClientSideEvents.FilesUploadComplete = "osveziGaleriju";
+                                             }).GetHtml()
+    }
+      
+    
+</div>
+
+    <div id="galerija"></div>
+    @Html.DevExpress().Button(x =>
+    {
+        x.Name = "btnObrisi";
+        x.Text = "Obriši";
+        x.Style.Add("position", "absolute");
+        x.Style.Add("top", "99px");
+        x.Style.Add("right", "75px");
+        x.ClientSideEvents.Click = "obrisiSliku";
+    }).GetHtml()
+</div>

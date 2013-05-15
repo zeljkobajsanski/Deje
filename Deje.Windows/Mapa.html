@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Mapa</title>
+    <script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+        var map;
+        var pin;
+        $(function () {
+            map = new Microsoft.Maps.Map(document.getElementById("mapa"), {
+                credentials: "AoAspjo-51Af3fRuiPmgnwZ6969gydoWrZ26rmvfE9tk10e7Q5JYNvs4rXLQ8VKn",
+                enableSearchLogo: false
+            });
+            map.setView({ zoom : 13 });
+
+            Microsoft.Maps.Events.addHandler(map, 'click', function (e) {
+                if (e.targetType == 'pushpin') {
+                    var point = new Microsoft.Maps.Point(e.getX(), e.getY());
+                    var loc = map.tryPixelToLocation(point);
+                    $("#latituda").val(loc.latitude);
+                    $("#longituda").val(loc.longitude);
+                }
+            });
+
+            Microsoft.Maps.Events.addHandler(map, 'imagerychanged', function () {
+                var zoom = map.getZoom();
+                $("#zoom").val(zoom);
+            });
+
+            $("#refresh").click(function () {
+                var latituda = $("#latituda").val();
+                var longituda = $("#longituda").val();
+                var zoom = $("#zoom").val();
+                var location = new Microsoft.Maps.Location(latituda, longituda);
+                if (!pin) {
+                    pin = new Microsoft.Maps.Pushpin(location, { draggable: true });
+                    map.entities.push(pin);
+                } else {
+                    pin.setLocation(location);
+                }
+                map.setView({ center: location, zoom : zoom});
+            });
+            
+            //$("#latituda").val(45.15);
+            //$("#longituda").val(19.85);
+            //$("#zoom").val(4);
+            //$("#refresh").click();
+        });
+    </script>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            position: relative
+        }
+        #id {
+            width: 100%;
+            height: 100%;
+        }
+        #refresh {
+            position: absolute;
+            bottom: 0;
+        }
+    </style>
+</head>
+    <body>
+        <div id="mapa"></div>
+        <input type="hidden" id="latituda" name="latituda" />
+        <input type="hidden" id="longituda" name="longituda" />
+        <input type="hidden" id="zoom" name="zoom" />
+        <input type="hidden" id="refresh"/>
+    </body>
+</html>

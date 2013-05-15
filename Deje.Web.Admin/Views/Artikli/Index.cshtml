@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Deje.Core.Model.Artikal>
+
+@{
+    ViewBag.Title = "Artikli";
+}
+
+<script>
+
+    function IdDobavljacaValueChanged(s, e) {
+        if (!gvArtikli.InCallback()) {
+            gvArtikli.PerformCallback();
+        }
+    }
+    
+    function gvArtikliBeginCallback(s, e) {
+        e.customArgs['idDobavljaca'] = IdDobavljaca.GetValue();
+    }
+</script>
+
+<div class="line">
+    @Html.DevExpress().Label(x =>
+                                 {
+                                     x.ControlStyle.CssClass = "label";
+                                     x.AssociatedControlName = "IdDobavljaca";
+                                     x.Text = "Dobavljač: ";
+                                 }).GetHtml()
+    @Html.Action("VratiDobavljaceComboBoxCallback", "Dobavljaci", new{width = 216, ViewBag.IdDobavljaca})    
+</div>
+
+<div class="line" style="width: 400px; margin-top: 10px;">
+    @Html.Partial("ArtikliGrid", Model)
+</div>
+

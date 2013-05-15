@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6D99018C-A483-4247-A676-0ED9931CD2DB}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Deje.Windows</RootNamespace>
+    <AssemblyName>Deje.Windows</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>deje.p12</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AzureDirectory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\AzureDirectory.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.BonusSkins.v12.2, Version=12.2.7.0, Culture=neutral, PublicKeyToken=95fc6c5621878f0a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v12.2, Version=12.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v12.2.Core, Version=12.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v12.2, Version=12.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraBars.v12.2, Version=12.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v12.2, Version=12.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGauges.v12.2.Core, Version=12.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGauges.v12.2.Win, Version=12.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGrid.v12.2, Version=12.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v12.2, Version=12.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraNavBar.v12.2, Version=12.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=1.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.WindowsAzure.StorageClient, Version=1.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Shell">
+      <HintPath>lib\Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="SimMetrics, Version=1.1.2458.37350, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\SimMetrics.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\Artikal.cs" />
+    <Compile Include="Model\SlicnostArtikla.cs" />
+    <Compile Include="Model\StringMetric.cs" />
+    <Compile Include="Model\WorkerStat.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ImportArtikala\DonesiComImportService.cs" />
+    <Compile Include="Services\ImportArtikala\IImportArtiakalaService.cs" />
+    <Compile Include="Utils\BindingSourceExtensions.cs" />
+    <Compile Include="Utils\StringExtensions.cs" />
+    <Compile Include="Views\Artikli.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Artikli.Designer.cs">
+      <DependentUpon>Artikli.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ArtikliDobavljaca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ArtikliDobavljaca.Designer.cs">
+      <DependentUpon>ArtikliDobavljaca.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Delatnosti.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Delatnosti.Designer.cs">
+      <DependentUpon>Delatnosti.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dobavljaci.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Dobavljaci.Designer.cs">
+      <DependentUpon>Dobavljaci.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportArtikala.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ImportArtikala.Designer.cs">
+      <DependentUpon>ImportArtikala.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\KategorijeArtikala.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\KategorijeArtikala.Designer.cs">
+      <DependentUpon>KategorijeArtikala.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sinonimi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Sinonimi.Designer.cs">
+      <DependentUpon>Sinonimi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sinonimi2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Sinonimi2.Designer.cs">
+      <DependentUpon>Sinonimi2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SlicnostArtikala.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SlicnostArtikala.Designer.cs">
+      <DependentUpon>SlicnostArtikala.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusiDobavljaca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\StatusiDobavljaca.Designer.cs">
+      <DependentUpon>StatusiDobavljaca.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StressTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\StressTest.Designer.cs">
+      <DependentUpon>StressTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UpravljanjeKategorijamaArtikala.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\UpravljanjeKategorijamaArtikala.Designer.cs">
+      <DependentUpon>UpravljanjeKategorijamaArtikala.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewFactories\ArtikliDobavljacaViewFactory.cs" />
+    <Compile Include="Views\ViewFactories\ArtikliViewFactory.cs" />
+    <Compile Include="Views\ViewFactories\DelatnostiViewFactory.cs" />
+    <Compile Include="Views\ViewFactories\DobavljaciViewFactory.cs" />
+    <Compile Include="Views\ViewFactories\ImportArtikalaViewFactory.cs" />
+    <Compile Include="Views\ViewFactories\KategorijeArtikalaViewFactory.cs" />
+    <Compile Include="Views\ViewFactories\SinonimiViewFactory.cs" />
+    <Compile Include="Views\ViewFactories\SinonimiViewFactory2.cs" />
+    <Compile Include="Views\ViewFactories\SlicnostArtikalaViewFactory.cs" />
+    <Compile Include="Views\ViewFactories\StatusiDobavljacaViewFactory.cs" />
+    <Compile Include="Views\ViewFactories\StressTestViewFactory.cs" />
+    <Compile Include="Views\ViewFactories\UpravljanjeKategorijamaArtikalaViewFactory.cs" />
+    <Compile Include="Views\ViewFactories\VrsteDobavljacaViewFactory.cs" />
+    <Compile Include="Views\VrsteDobavljaca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\VrsteDobavljaca.Designer.cs">
+      <DependentUpon>VrsteDobavljaca.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Views\Artikli.resx">
+      <DependentUpon>Artikli.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ArtikliDobavljaca.resx">
+      <DependentUpon>ArtikliDobavljaca.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Delatnosti.resx">
+      <DependentUpon>Delatnosti.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Dobavljaci.resx">
+      <DependentUpon>Dobavljaci.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ImportArtikala.resx">
+      <DependentUpon>ImportArtikala.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\KategorijeArtikala.resx">
+      <DependentUpon>KategorijeArtikala.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Sinonimi.resx">
+      <DependentUpon>Sinonimi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Sinonimi2.resx">
+      <DependentUpon>Sinonimi2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SlicnostArtikala.resx">
+      <DependentUpon>SlicnostArtikala.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\StatusiDobavljaca.resx">
+      <DependentUpon>StatusiDobavljaca.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\StressTest.resx">
+      <DependentUpon>StressTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UpravljanjeKategorijamaArtikala.resx">
+      <DependentUpon>UpravljanjeKategorijamaArtikala.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\VrsteDobavljaca.resx">
+      <DependentUpon>VrsteDobavljaca.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="deje.p12" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\Deje.Core.Model.Artikal.datasource" />
+    <None Include="Properties\DataSources\Deje.Core.Model.Delatnost.datasource" />
+    <None Include="Properties\DataSources\Deje.Core.Model.Dobavljac.datasource" />
+    <None Include="Properties\DataSources\Deje.Core.Model.KategorijaArtikla.datasource" />
+    <None Include="Properties\DataSources\Deje.Core.Model.Kontakt.datasource" />
+    <None Include="Properties\DataSources\Deje.Core.Model.Sinonim.datasource" />
+    <None Include="Properties\DataSources\Deje.Core.Model.StatusDobavljaca.datasource" />
+    <None Include="Properties\DataSources\Deje.Core.Model.VrstaDobavljaca.datasource" />
+    <None Include="Properties\DataSources\Deje.Windows.Model.Artikal.datasource" />
+    <None Include="Properties\DataSources\Deje.Windows.Model.SlicnostArtikla.datasource" />
+    <None Include="Properties\DataSources\Deje.Windows.Model.StringMetric.datasource" />
+    <None Include="Properties\DataSources\Deje.Windows.Model.WorkerStat.datasource" />
+    <None Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Deje.AzureBlobStorage\Deje.AzureBlobStorage.csproj">
+      <Project>{af4a5ffa-3b66-4864-91e2-98f3be323a6e}</Project>
+      <Name>Deje.AzureBlobStorage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Deje.Core\Deje.Core.csproj">
+      <Project>{6e9060f6-d530-4b7c-9926-666668f87cee}</Project>
+      <Name>Deje.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Deje.Lucene\Deje.Lucene.csproj">
+      <Project>{9061f87d-b668-4148-91d0-51b87bf9bc26}</Project>
+      <Name>Deje.Lucene</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Deje.Repository.EF\Deje.Repository.EF.csproj">
+      <Project>{0630cb6c-061d-444c-81c9-a09433f303b4}</Project>
+      <Name>Deje.Repository.EF</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="sinonimi.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sinonimi.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="stress.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="lib\HtmlAgilityPack.dll" />
+    <None Include="lib\Shell.dll" />
+    <None Include="lib\AzureDirectory.dll" />
+    <None Include="lib\Lucene.Net.dll" />
+    <Content Include="lib\SimMetrics.dll" />
+    <Content Include="Mapa.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Results\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,14 @@
+﻿@using System.Web.UI.WebControls
+@model int?
+
+@Html.DevExpress().ComboBox(x =>
+{
+    x.Name = "IdDobavljaca";
+    x.Properties.TextField = "Naziv";
+    x.Properties.ValueType = typeof (int);
+    x.Properties.ValueField = "Id";
+    x.CallbackRouteValues = new {controller = "Dobavljaci", Action = "VratiDobavljaceComboBoxCallback"};
+    x.Properties.ClientSideEvents.ValueChanged = "IdDobavljacaValueChanged";
+    //x.ControlStyle.CssClass = "editor";
+    x.Width = Unit.Pixel(ViewBag.ComboWidth);
+}).BindList(ViewBag.Dobavljaci).Bind(Model).GetHtml()

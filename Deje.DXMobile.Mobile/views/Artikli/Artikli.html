@@ -1,0 +1,15 @@
+﻿<div data-dx-role="view" data-dx-name="Artikli" data-dx-title="Artikli">
+    <div data-dx-target-placeholder="content">
+        <div data-bind="dxList: { items: artikli }">
+            <div data-dx-name="item" data-dx-role="template" data-bind="dxAction: '#Mapa/{Tip}/{Id}'">
+                <img data-bind="attr: {src: Slika}" width="80" height="80" alt="" style="float: left; width: 80px"/>
+                <div style="overflow: hidden; margin-left: 90px; white-space: normal">
+                    <p style="float: left;" data-bind="text: Naziv"></p><span style="float: right; font-size: 10px" data-bind="text: Broj"></span>    
+                    <p style="font-size: 10px; clear: both" data-bind="text: Opis"></p>    
+                </div>
+                
+            </div>
+        </div>
+        <div data-bind="dxLoadIndicator: { message: 'Molim sačekajte...', loading: busy }"></div>
+    </div>
+</div>

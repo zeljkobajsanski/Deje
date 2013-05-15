@@ -1,0 +1,7 @@
+﻿@model Deje.Core.Model.Artikal
+
+
+@using (Html.BeginForm("New", "Artikli", FormMethod.Post))
+{
+    @Html.Partial("EditPartial", Model)
+}

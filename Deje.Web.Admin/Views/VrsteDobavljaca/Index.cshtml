@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Deje.Core.Model.VrstaDobavljaca>
+
+@{
+    ViewBag.Title = "Vrste dobavljača";
+}
+
+<script>
+    function vrsteDobavljacaGridBeginCallback(s, e) {
+        e.customArgs['idDelatnosti'] = cmbDelatnosti.GetValue();
+    }
+
+    function delatnostiValueChanged(s, e) {
+        if (!gvVrsteDobavljaca.InCallback()) {
+            gvVrsteDobavljaca.PerformCallback();
+        }
+    }
+</script>
+
+@Html.DevExpress().ComboBox(x =>
+                                {
+                                    x.Name = "cmbDelatnosti";
+                                    x.Properties.TextField = "Naziv";
+                                    x.Properties.ValueField = "Id";
+                                    x.Properties.ClientSideEvents.ValueChanged = "delatnostiValueChanged";
+                                }).BindList(ViewData["Delatnosti"]).GetHtml()
+
+@Html.Partial("VrsteDobavljacaGrid", Model)

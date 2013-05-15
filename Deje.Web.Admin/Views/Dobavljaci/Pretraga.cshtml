@@ -1,0 +1,152 @@
+﻿@using System.Web.UI.WebControls
+@using Deje.Web.Admin.Model
+@{
+    ViewBag.Title = "Pretraga dobavljača";
+}
+
+<script>
+    var mapa = null;
+    var myPosition = null;
+    var myPushpin = null;
+    var searchResults = null;
+    $(document).ready(function() {
+        mapa = null;
+        myPosition = new Microsoft.Maps.Location(defaultLatitude, defaultLongitude);
+        myPushpin = new Microsoft.Maps.Pushpin(myPosition, {draggable : true, icon : '@Url.Content("~/Content/profile.png")'});
+        mapa = new Microsoft.Maps.Map(document.getElementById("mapa"), { credentials: bingMapsCredentials, zoom: defaultZoom, center: myPosition, enableSearchLogo : false, showMapTypeSelector : false});
+        mapa.entities.push(myPushpin);
+        
+    });
+
+    function pretrazi() {
+        $.get('@Url.Action("Pretrazi", "Dobavljaci")',
+            { latitude: myPushpin.getLocation().latitude, longitude: myPushpin.getLocation().longitude, distance: Razdaljina.GetNumber() },
+            function (results) {
+                mapa.entities.clear();
+                mapa.entities.push(myPushpin);
+                $.each(results, function(ix, el) {
+                    var pp = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(el.Latituda, el.Longituda));
+                    Microsoft.Maps.Events.addHandler(pp, 'click', function() {
+                        var infoBox = new Microsoft.Maps.Infobox(pp.getLocation(), { 'title': el.Naziv, 'description' : 'Udaljenost: ' + el.Rastojanje + ' m', 'visible': true });
+                        mapa.entities.push(infoBox);
+                    });
+                    mapa.entities.push(pp);
+                });
+            });
+    }
+
+    function formatirajIspisInfoBoxa(dobavljac) {
+        var ispis = '<h4>' + dobavljac.Naziv + '</h4>' +
+                    '<p>Rastojanje :' + dobavljac.Razdaljina + ' m</p>';
+        return ispis;
+    }
+
+    function pojamPretrageChanged(s, e) {
+        var pojam = s.GetText();
+        loader.Show();
+        callBingMapsSearch(pojam, 'prikaziPretragu');
+    }
+    
+    function izaberi(latituda, longituda) {
+        popupPretragaAdresa.Hide();
+        postaviMe(latituda, longituda);
+    }
+    
+    function postaviMe(latitude, longitude) {
+        var location = new Microsoft.Maps.Location(latitude, longitude);
+        myPushpin.setLocation(location);
+        mapa.setView({ 'center': location });
+    }
+    
+    function pretragaAdresaBeginCallback(s, e) {
+        e.customArgs['rezultati'] = JSON.stringify(searchResults);
+    }
+
+    function prikaziPretragu(result) {
+        loader.Hide();
+        if (result.statusCode != 200) {
+            alert(result.statusDecription);
+        } else {
+            if (result.resourceSets.length == 1) {
+                var resources = result.resourceSets[0].resources;
+                searchResults = [];
+                for (var i = 0; i < resources.length; i++) {
+                    var r = resources[i];
+                    console.log(r.address.formattedAddress + "[" + r.point.coordinates[0] + ', ' + r.point.coordinates[1] + "]");
+                    searchResults.push({ Adresa: r.address.formattedAddress, Latituda: r.point.coordinates[0], Longituda: r.point.coordinates[1] });
+                }
+                if (searchResults.length == 1) {
+                    postaviMe(searchResults[0].Latituda, searchResults[0].Longituda);
+                }
+                if (!gvPretragaAdresa.InCallback() && searchResults.length > 1) {
+                    gvPretragaAdresa.PerformCallback();
+                    popupPretragaAdresa.ShowAtElementByID("txtPojamPretrage");
+                }
+            }
+        }
+    }
+</script>
+
+<style>
+    #mapa {
+        position: absolute;
+        top: 24px;
+        left: 0px;
+        width: 814px;
+        height: 690px;
+    } 
+    #txtPojamPretrage, #Razdaljina, #btnPretrazi {
+        float: left;
+    }  
+     #Razdaljina, #btnPretrazi {
+         margin-left: 5px;
+     }
+</style>
+
+<div class="line">
+    
+@Html.DevExpress().TextBox(textEdit => 
+{
+  textEdit.Name = "txtPojamPretrage";
+  textEdit.Properties.ConvertEmptyStringToNull = true;
+  textEdit.Properties.NullText = "Vaša lokacija: ulica, mesto...";
+  textEdit.Width = Unit.Pixel(300);
+    textEdit.Properties.ClientSideEvents.TextChanged = "pojamPretrageChanged";
+}).GetHtml()
+
+@Html.DevExpress().SpinEdit(x =>
+{
+    x.Name = "Razdaljina";
+    x.Number = 500;
+    x.Properties.DisplayFormatString = "{0:n0} m";
+    x.Width = Unit.Pixel(70);
+    x.Properties.Increment = 50;
+}).GetHtml()   
+ @Html.DevExpress().Button(x =>
+                               {
+                                   x.Name = "btnPretrazi";
+                                   x.Text = "Pretraži";
+                                   x.ClientSideEvents.Click = "pretrazi";
+                               }).GetHtml()   
+</div>
+
+<div id="mapa">
+</div>
+
+@Html.DevExpress().LoadingPanel(x =>
+                                    {
+                                        x.Name = "loader";
+                                        x.Modal = true;
+                                        x.Text = "Pretraga u toku...";
+                                        x.ContainerElementID = "mapa";
+                                    }).GetHtml()
+
+@Html.DevExpress().PopupControl(x =>
+{
+    x.Name = "popupPretragaAdresa";
+    x.Modal = true;
+    x.HeaderText = "Rezultati pretrage";
+    x.SetContent(() => @Html.RenderPartial("PretragaAdresaGrid", Enumerable.Empty<RezultatPretrage>()));
+    x.Width = Unit.Pixel(600);
+    x.PopupHorizontalAlign = PopupHorizontalAlign.OutsideRight;
+}).GetHtml()

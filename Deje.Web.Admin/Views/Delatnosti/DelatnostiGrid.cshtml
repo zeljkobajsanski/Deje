@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Deje.Core.Model.Delatnost>
+
+@{
+var grid = @Html.DevExpress().GridView(s =>
+{
+    s.Name = "gvDelatnosti";
+    s.Caption = "Delatnosti";
+    s.CallbackRouteValues = new {Controller = "Delatnosti", Action = "VratiDelatnostiPartial"};
+    s.Settings.ShowFilterRow = true;
+    s.KeyFieldName = "Id";
+    s.CommandColumn.Visible = true;
+    s.CommandColumn.SetHeaderTemplateContent(tc =>
+                                                 {
+                                                     @Html.DevExpress().HyperLink(ls =>
+                                                                                      {
+                                                                                          ls.Name = "lnkNovi";
+                                                                                          ls.Properties.Text = "Nova delatnost";
+                                                                                          ls.Properties.ClientSideEvents.Click = "function() {gvDelatnosti.AddNewRow();}";
+                                                                                      }).GetHtml();
+                                                 });
+    s.CommandColumn.EditButton.Visible = true;
+    s.CommandColumn.DeleteButton.Visible = true;
+    s.Columns.Add("Naziv", "Naziv delatnosti");
+    s.Columns.Add("StraniNaziv", "Strani naziv");
+    s.SettingsEditing.AddNewRowRouteValues = new {Controller = "Delatnosti", Action = "SacuvajDelatnost"};
+    s.SettingsEditing.UpdateRowRouteValues = new { Controller = "Delatnosti", Action = "SacuvajDelatnost" };
+    s.SettingsEditing.DeleteRowRouteValues = new {Controller = "Delatnosti", Action = "Obrisi"};
+    s.SettingsEditing.Mode = GridViewEditingMode.Inline;
+    s.SettingsEditing.ShowModelErrorsForEditors = true;
+});
+    if (ViewData["Error"] != null)
+    {
+        grid.SetEditErrorText(ViewData["Error"] as string);
+    }
+    grid.Bind(Model).GetHtml();
+}
+
+
+      

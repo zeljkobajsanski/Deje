@@ -1,0 +1,159 @@
+﻿@using System.Web.UI.WebControls
+@model Deje.Core.Model.Dobavljac
+<link href='@Url.Content("~/Content/styles/pikachoose/bottom.css")' rel="stylesheet" />
+@*<link href='@Url.Content("~/Content/jquery.fancybox.css")' rel="stylesheet" />*@
+<script src="@Url.Content("~/Scripts/jquery.jcarousel.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.pikachoose.full.js")" type="text/javascript"></script>
+@*<script src="@Url.Content("~/Scripts/jquery.fancybox.pack.js")" type="text/javascript"></script>*@
+
+<style>
+    .pika-thumbs {
+        padding-left: 0 !important;
+    }
+    .pika-stage {
+        width: 620px;
+    }
+</style>
+
+<script>
+    var map = null;
+    var searchResults = null;
+    $(document).ready(function () {
+        map = new window.Microsoft.Maps.Map(document.getElementById("map"),
+            {
+                credentials: bingMapsCredentials,
+                mapTypeId: window.Microsoft.Maps.MapTypeId.auto,
+                zoom: @Model.Zoom,
+                center: new Microsoft.Maps.Location(@Model.GpsLatitude, @Model.GpsLongitude),
+                enableSearchLogo: false,
+            });
+        var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(@Model.GpsLatitude, @Model.GpsLongitude), {draggable : true});
+        map.entities.push(pushpin);
+
+        Microsoft.Maps.Events.addHandler(pushpin, 'dragend', function(e) {
+            $.post('@Url.Action("SacuvajLokaciju", "Dobavljaci")', { id: @Model.Id, latitude: pushpin.getLocation().latitude, longitude: pushpin.getLocation().longitude, zoom : map.getTargetZoom() });
+        });
+        
+        osveziGaleriju();
+    });
+
+    function osveziGaleriju() {
+        $.get('@Url.Action("VratiGalerijuSlika", "Dobavljaci")', { 'id': @Model.Id }, function(slike) {
+            var galerija = $("#galerija");
+            galerija.empty();
+            if(slike.length == 0) {
+                galerija.hide();
+                btnObrisi.SetVisible(false);
+            } else {
+                galerija.PikaChoose({ data: slike});
+                galerija.show();
+                btnObrisi.SetVisible(true);
+                $(".pika-textnav").hide();
+            }
+        });
+    }
+
+    function promeniLokaciju() {
+        var latituda = GpsLatitude.GetNumber();
+        var longituda = GpsLongitude.GetNumber();
+        var novaLokacija = new Microsoft.Maps.Location(latituda, longituda);
+        map.entities.get(0).setLocation(novaLokacija);
+        map.setView({ center: novaLokacija });
+    }
+
+    function sacuvaj() {
+        var latitude = map.entities.get(0).getLocation().latitude;
+        var longitude = map.entities.get(0).getLocation().longitude;
+        $("#GpsLatitude").val(latitude);
+        $("#GpsLongitude").val(longitude);
+        $("#Zoom").val(map.getZoom());
+        $("#dobavljacEditForm").submit();
+    }
+
+    function promenjenaAdresa() {
+        var adresa = txtAdresa.GetText();
+        var mesto = txtMesto.GetText();
+        map.getCredentials(function(credentials) {
+            var geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations?query=" + encodeURI(adresa + ',' + mesto) + "&output=json&jsonp=GeocodeCallback&key=" + credentials;
+            CallRestService(geocodeRequest);
+        });
+    }
+    
+    function CallRestService(request) {
+        var script = document.createElement("script");
+        script.setAttribute("type", "text/javascript");
+        script.setAttribute("src", request);
+        document.body.appendChild(script);
+    }
+    
+    function GeocodeCallback(result) {
+        if (result.statusCode == 200) {
+            if (result.resourceSets.length == 1) {
+                var resources = result.resourceSets[0].resources;
+                searchResults = [];
+                for (var i = 0; i < resources.length; i++) {
+                    var r = resources[i];
+                    console.log(r.address.formattedAddress + "[" + r.point.coordinates[0] + ', ' + r.point.coordinates[1] + "]");
+                    searchResults.push({ Adresa: r.address.formattedAddress, Latituda: r.point.coordinates[0], Longituda: r.point.coordinates[1] });
+                }
+                if (searchResults.length == 1) {
+                    pozicioniraj(searchResults[0].Latituda, searchResults[0].Longituda);
+                }
+                if (!gvPretragaAdresa.InCallback() && searchResults.length > 1) {
+                    gvPretragaAdresa.PerformCallback();
+                    popupPretragaAdresa.ShowAtElementByID("Kontakt.Adresa");
+                }
+            }
+        }
+    }
+    
+    function pozicioniraj(latituda, longituda) {
+        var newLocation = new Microsoft.Maps.Location(latituda, longituda);
+        map.entities.get(0).setLocation(newLocation);
+        map.setView({ center: newLocation });
+        GpsLatitude.SetNumber(newLocation.latitude);
+        GpsLongitude.SetNumber(newLocation.longitude);
+    }
+
+    function izaberi(latituda, longituda) {
+        pozicioniraj(latituda, longituda);
+        popupPretragaAdresa.Hide();
+    }
+
+    function pretragaAdresaBeginCallback(s, e) {
+        e.customArgs['rezultati'] = JSON.stringify(searchResults);
+    }
+    
+    function obrisiSliku() {
+        var activeImg = $(".active img");
+        if (activeImg != null) {
+            var id = activeImg.attr('src');
+            $.post('@Url.Action("ObrisiSliku", "Dobavljaci")', { id: id }, function() {
+                osveziGaleriju();
+            });
+        }
+            
+    }
+
+    function idDelatnostiValueChanged(s, e) {
+        if (!IdVrsteDobavljaca.InCallback()) {
+            IdVrsteDobavljaca.PerformCallback();
+        }
+    }
+
+    function idVrsteDobavljacaBeginCallback(s, e) {
+        e.customArgs['idDelatnosti'] = IdDelatnosti.GetValue();
+    }
+
+
+</script>
+
+@Html.DevExpress().PageControl(x =>
+                                  {
+                                      x.Name = "tabControl";
+                                      x.TabPages.Add("Osnovni podaci").SetContent(() => Html.RenderPartial("DobavljacForm", Model));
+                                      x.TabPages.Add("Mapa").SetContent(() => ViewContext.Writer.Write("<div id='map' style='position: absolute; width: 760px; height: 600px; left: 20px; top: 40px;'></div>"));
+                                      x.TabPages.Add("Galerija").SetContent(() => Html.RenderPartial("Galerija", Model));
+                                      x.Width = Unit.Pixel(800);
+                                      x.Height = Unit.Pixel(680);
+                                  }).GetHtml()

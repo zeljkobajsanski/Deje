@@ -1,0 +1,16 @@
+﻿@using System.Web.UI.WebControls
+@model IEnumerable<Deje.Core.Model.Artikal>
+
+
+@Html.DevExpress().GridView(s =>
+{
+    s.Name = "gvArtikli";
+    s.Caption = "Artikli bez sinonima";
+    s.CallbackRouteValues = new {Controller = "Sinonimi", Action = "VratiArtikleBezSinonimaCallback"};
+    s.Columns.Add("KategorijaArtikla.Naziv", "Kategorija artikla");
+    s.Columns.Add("Naziv");
+    s.SettingsPager.PageSize = 25;
+    s.Width = Unit.Pixel(300);
+    s.Settings.ShowFilterRow = true;
+}).Bind(Model).GetHtml()
+      

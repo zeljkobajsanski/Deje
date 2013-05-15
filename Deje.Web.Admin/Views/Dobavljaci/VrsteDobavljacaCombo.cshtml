@@ -1,0 +1,15 @@
+﻿@model int?
+           
+@Html.DevExpress().ComboBox(x =>
+{
+    x.Name = "IdVrsteDobavljaca";
+    x.ControlStyle.CssClass = "editor";
+    x.ShowModelErrors = true;
+    x.Properties.TextField = "Naziv";
+    x.Properties.ValueField = "Id";
+    x.Properties.ValueType = typeof(int);
+    x.CallbackRouteValues = new { action = "VratiVrsteDobavljacaCallback" };
+    x.Properties.ClientSideEvents.BeginCallback = "idVrsteDobavljacaBeginCallback";
+
+}).BindList(ViewBag.VrsteDobavljaca).Bind(Model).GetHtml()
+

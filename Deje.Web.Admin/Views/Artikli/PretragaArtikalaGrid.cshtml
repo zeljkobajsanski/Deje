@@ -1,0 +1,59 @@
+﻿@using System.Web.UI.WebControls
+@model IEnumerable<Deje.Core.Model.Artikal>
+
+
+@Html.DevExpress().GridView(s =>
+{
+    s.Name = "gvPretragaArtikala";
+    s.Caption = "Artikli";
+    s.CallbackRouteValues = new {Controller = "Artikli", Action = "VratiArtiklePretrageCallback"};
+    
+    s.Columns.Add(c =>
+    {
+        c.SetDataItemTemplateContent(tc =>
+        {
+            var id = DataBinder.Eval(tc.DataItem, "Id");
+            @Html.DevExpress().HyperLink(ls =>
+            {
+                ls.Name = "lnkIzaberi_" + id;
+                ls.Properties.Text = "Izaberi";
+                ls.NavigateUrl = @Url.Action("KopirajArtikal", "Artikli", new { idArtikla = id, idDobavljaca = ViewBag.IdDobavljaca});
+                ls.ControlStyle.Cursor = "pointer";
+            }).Render();
+        });
+    });
+    s.Columns.Add(c =>
+    {
+        c.FieldName = "IdKategorijeArtikla";
+        c.Caption = "Kategorija";
+        c.ColumnType = MVCxGridViewColumnType.ComboBox;
+        var editor = (ComboBoxProperties)c.PropertiesEdit;
+        editor.TextField = "Naziv";
+        editor.ValueType = typeof(int);
+        editor.ValueField = "Id";
+        editor.DataSource = ViewBag.KategorijeArtikala;
+        //c.GroupIndex = 0;
+    });
+    s.Columns.Add(c =>
+                      {
+                          //c.FieldName = "LinkSlike";
+                          //c.Caption = "Slika";
+                          c.SetDataItemTemplateContent(tc =>
+                                                           {
+                                                               @Html.DevExpress().Image(i =>
+                                                                                            {
+                                                                                                i.ImageUrl = (string) DataBinder.Eval(tc.DataItem, "LinkSlike");
+                                                                                                i.Height = Unit.Pixel(50);
+                                                                                                i.Width = Unit.Pixel(50);
+                                                                                            }).Render();
+                                                           });
+                      });
+    s.Columns.Add("Naziv", "Naziv artikla");
+    s.Columns.Add("Dobavljac.Naziv", "Dobavljač");
+    s.SettingsPager.PageSize = 8;
+    s.Width = Unit.Percentage(100);
+    s.KeyFieldName = "Id";
+    s.Settings.ShowFilterRow = true;
+    s.ClientSideEvents.BeginCallback = "gvPretragaArtikalaBeginCallback";
+}).Bind(Model).GetHtml()
+      

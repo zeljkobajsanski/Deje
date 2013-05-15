@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Deje</title>
+    <link href="@Url.Content("~/Content/Css/bootstrap.min.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="navbar">
+            <div class="navbar-inner">
+                <a class="brand">
+                    <img src="@Url.Content("~/Content/Images/logo.png")" alt="logo"/>
+                </a>
+                <ul class="nav pull-right" style="margin-top: 10px;">
+                    <li class="divider-vertical"></li>
+                    <li>@Html.ActionLink("Registracija", "Index", "Login")</li>
+                    <li class="divider-vertical"></li>
+                    <li>@Html.ActionLink("Prijava", "Index", "Login")</li>
+                </ul>
+            </div>
+        </header>
+    </div>
+</body>
+</html>

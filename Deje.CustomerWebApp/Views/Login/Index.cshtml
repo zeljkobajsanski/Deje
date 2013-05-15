@@ -1,0 +1,46 @@
+﻿@using Deje.Core.Status
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Deje - Prijava</title>
+    <link href="@Url.Content("~/Content/Css/bootstrap.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/Css/login.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+</head>
+    <body>
+        <div class="container" style="width: 320px;">
+            @using (@Html.BeginForm("Index", "Login", FormMethod.Post, new{@class = "form-horizontal"}))
+            {
+                <fieldset>
+                    <legend><img src="@Url.Content("~/Content/Images/logo.png")" alt="Logo"/></legend>
+                    <div>
+                        <input type="text" name="korisnickoIme" id="korisnickoIme" placeholder="Korisničko ime" class="input-xlarge" required />
+                    </div>
+                    <div>
+                        <input type="password" name="lozinka" id="lozinka" placeholder="Lozinka" class="input-xlarge" required />
+                    </div>
+                    <div>
+                        <label class="checkbox" style="margin-left: 5px">
+                            <input type="checkbox" name="zapamti" id="zapamti" />
+                            Zapamti me
+                        </label>
+                    </div>
+                    @Html.ActionLink("Zaboravljena lozinka?", "ZaboravljenaLozinka", null, new{style = "float: left; margin-top:30px"})
+                    <input type="submit" value="Prijavi me" class="btn btn-success"/>
+                    @if (TempData["Status"] != null)
+                    {
+                        var status = ((StatusMessage) TempData["Status"]).Message;
+                        <p style="clear: right; padding-top: 15px;" class="text-error">@status</p>    
+                    }
+                    
+                </fieldset>
+            }
+        </div>
+        
+    </body>
+</html>

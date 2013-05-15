@@ -1,0 +1,22 @@
+<div data-dx-role="view" data-dx-name="Dobavljac" data-dx-title="Restoran">
+    <div data-dx-target-placeholder="content">
+        <div data-bind="dxLoadIndicator: { message: 'Molim sačekajte...', loading: loading }"></div>
+        <div data-bind="dxNavBar: {items: navbar, selectedIndex: page}"></div>
+        <div data-bind="visible: page() == 0">
+            <img width="80" height="80" alt="" src="#" data-bind="attr: {src: slika}">
+        </div>
+        <div data-bind="dxList: {dataSource: ponuda, grouped: true, disabled: true}, visible: page() == 1">
+            <div data-dx-role="template" data-dx-name="item">
+                <img width="80" height="80" style="vertical-align: top;" src="#" data-bind="attr: {src: Slika}">
+                <div style="display: inline-block; width: 220px">
+                    <span data-bind="text: Naziv"></span>
+                    <p class="opis" data-bind="text: Opis"></p>
+                    <p class="opis" style="position: absolute; bottom: 10px" data-bind="text: Cena"></p>
+                </div>
+            </div>
+        </div>
+        <div data-bind="visible: page() == 2">
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,30 @@
+﻿@using System.Web.UI.WebControls
+@model IEnumerable<Deje.Core.Model.KategorijaArtikla>
+
+
+@Html.DevExpress().GridView(s =>
+{
+    s.Name = "gvKategorijeArtikala";
+    s.Caption = "Kategorije artikala";
+    s.CallbackRouteValues = new {Action = "VratiKategorijeArtikalaCallback"};
+    s.Columns.Add("Naziv").Width = Unit.Pixel(200);
+    s.SettingsEditing.Mode = GridViewEditingMode.Inline;
+    s.SettingsEditing.AddNewRowRouteValues = new {action = "SacuvajKategorijuArtikla"};
+    s.SettingsEditing.UpdateRowRouteValues = new {action = "SacuvajKategorijuArtikla"};
+    s.SettingsEditing.DeleteRowRouteValues = new {action = "ObrišiKategorijuArtikla"};
+    s.CommandColumn.Visible = true;
+    s.CommandColumn.EditButton.Visible = true;
+    s.CommandColumn.DeleteButton.Visible = true;
+    s.CommandColumn.SetHeaderTemplateContent(tc =>
+    {
+        @Html.DevExpress().HyperLink(ls =>
+        {
+            ls.Name = "lnkNew";
+            ls.Properties.Text = "Dodaj novu";
+            ls.Properties.ClientSideEvents.Click = "function(s, e){ gvKategorijeArtikala.AddNewRow(); }";
+        }).Render();
+    });
+    
+    s.KeyFieldName = "Id";
+}).Bind(Model).GetHtml()
+      

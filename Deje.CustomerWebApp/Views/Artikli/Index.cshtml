@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Deje.Core.Model.Artikal>
+@{
+    ViewBag.Title = "Artikli";
+}
+@Html.DevExpress().Button(s =>
+                              {
+                                  var lnk = @Url.Action("New");
+                                  s.Name = "New";
+                                  s.Images.Image.Url = @Url.Content("~/Content/Images/add.png");
+                                  s.ToolTip = "Dodaj novi";
+                                  s.Text = "Dodaj novi";
+                                  s.ClientSideEvents.Click = "function(){window.location='" + lnk + "'}";
+                              }).GetHtml()
+@Html.Partial("PartialArtikliGrid", Model)

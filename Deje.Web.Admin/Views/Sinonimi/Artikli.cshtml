@@ -1,0 +1,33 @@
+﻿@using Deje.Core.Model
+@{
+    ViewBag.Title = "Sinonimi";
+}
+
+<script>
+    function cmbSinonimiValueChanged() {
+        if (!gvArtikliSinonima.InCallback()) {
+            gvArtikliSinonima.PerformCallback();
+        }
+    }
+    
+    function gvArtikliSinonimaBeginCallback(s, e) {
+        e.customArgs['idSinonima'] = cmbSinonimi.GetValue();
+    }
+</script>
+
+<div style="float: left; width: 310px;">
+    @Html.Partial("ArtikliGrid", ViewData["ArtikliBezSinonima"])
+</div>
+
+<div style="float: left;">
+    @Html.DevExpress().ComboBox(x =>
+                                    {
+                                        x.Name = "cmbSinonimi";
+                                        x.Properties.TextField = "Naziv";
+                                        x.Properties.ValueType = typeof (int);
+                                        x.Properties.ValueField = "Id";
+                                        x.Properties.ClientSideEvents.ValueChanged = "cmbSinonimiValueChanged";
+                                    }).BindList(ViewData["Sinonimi"]).GetHtml()
+    
+    @Html.Partial("ArtikliSinonima", Enumerable.Empty<Artikal>())
+</div>

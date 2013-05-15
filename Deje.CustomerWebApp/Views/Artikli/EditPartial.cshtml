@@ -1,0 +1,142 @@
+﻿@using System.Web.UI.WebControls
+@using ValidationSettings = DevExpress.Web.ASPxUploadControl.ValidationSettings
+@model Deje.Core.Model.Artikal
+@{
+    const int width = 198;
+}
+
+@Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.IdSinonima)
+    @Html.HiddenFor(x => x.IdDobavljaca)
+    @Html.HiddenFor(x => x.Slika)
+
+<div class="left">
+    @Html.DevExpress().Image(s =>
+                                 {
+                                     s.Properties.EmptyImage.Url = @Url.Content("~/Content/Images/photo_missing.jpg");
+                                 }).Bind(Model.Slika).GetHtml()
+    
+</div>
+<div class="form">
+    <div class="line">
+        @Html.DevExpress().Label(s =>
+                                     {
+                                         s.Text = "Naziv artikla";
+                                         s.AssociatedControlName = "Naziv";
+                                         s.ControlStyle.CssClass = "labela";
+                                     }).GetHtml()
+        @Html.DevExpress().TextBox(s =>
+                                       {
+                                           s.Name = "Naziv";
+                                           s.ShowModelErrors = true;
+                                           s.ControlStyle.CssClass = "editor";
+                                           s.Width = Unit.Pixel(width);
+                                       }).Bind(Model.Naziv).GetHtml()
+    </div>
+    <div class="line">
+        @Html.DevExpress().Label(s =>
+                                 {
+                                     s.Text = "Vrsta artikla";
+                                     s.AssociatedControlName = "IdKategorijeArtikla";
+                                     s.ControlStyle.CssClass = "labela";
+                                 }).GetHtml()
+        @Html.DevExpress().ComboBox(s =>
+                                        {
+                                            s.Name = "IdKategorijeArtikla";
+                                            s.ShowModelErrors = true;
+                                            s.Properties.TextField = "Naziv";
+                                            s.Properties.ValueType = typeof (int);
+                                            s.Properties.ValueField = "Id";
+                                            s.ControlStyle.CssClass = "editor";
+                                            s.Width = Unit.Pixel(width);
+                                        }).BindList(ViewBag.KategorijeArtikala).Bind(Model.IdKategorijeArtikla).GetHtml()
+    </div>
+    <div class="line">
+        @Html.DevExpress().Label(s =>
+                                     {
+                                         s.Text = "Opis artikla";
+                                         s.AssociatedControlName = "Opis";
+                                         s.ControlStyle.CssClass = "labela";
+                                     }).GetHtml()
+        @Html.DevExpress().Memo(s =>
+                                    {
+                                        s.Name = "Opis";
+                                        s.ShowModelErrors = true;
+                                        s.Height = Unit.Pixel(120);
+                                        s.Width = Unit.Pixel(width);
+                                        s.ControlStyle.CssClass = "editor";
+                                    }).Bind(Model.Opis).GetHtml()
+    </div>
+    <div class="line">
+        @Html.DevExpress().Label(s =>
+                                     {
+                                         s.Text = "Slika";
+                                         s.AssociatedControlName = "SlikaUpload";
+                                         s.ControlStyle.CssClass = "labela";
+                                     }).GetHtml()
+        @Html.DevExpress().UploadControl(s =>
+                                         {
+                                             s.Name = "SlikaUpload";
+                                             s.BrowseButton.Text = "Učitaj...";
+                                             s.Width = Unit.Pixel(width);
+                                             s.ControlStyle.CssClass = "editor";
+                                             s.ShowClearFileSelectionButton = true;
+                                             s.UploadMode = UploadControlUploadMode.Standard; 
+                                         }).GetHtml()
+    </div>
+    
+    <div class="line">
+        @Html.DevExpress().Label(s =>
+                                     {
+                                         s.Text = "Cena";
+                                         s.AssociatedControlName = "Cena";
+                                         s.ControlStyle.CssClass = "labela";
+                                     }).GetHtml()
+        @Html.DevExpress().SpinEdit(s =>
+                                        {
+                                            s.Name = "Cena";
+                                            s.ShowModelErrors = true;
+                                            s.Properties.DisplayFormatString = "n2";
+                                            s.Properties.DisplayFormatInEditMode = true;
+                                            s.Properties.DecimalPlaces = 2;
+                                            s.ControlStyle.CssClass = "editor";
+                                            s.Width = Unit.Pixel(width);
+                                            s.Properties.AllowMouseWheel = false;
+                                            s.Properties.Style.HorizontalAlign = HorizontalAlign.Right;
+                                        }).Bind(Model.Cena).GetHtml()
+    </div>
+    <div class="line">
+        @Html.DevExpress().Label(x =>
+                                     {
+                                         x.Text = "Aktivan";
+                                         x.AssociatedControlName = "Aktivan";
+                                         x.ControlStyle.CssClass = "labela";
+                                     }).GetHtml()
+    @Html.DevExpress().CheckBox(x =>
+                                    {
+                                        x.Name = "Aktivan";
+                                        //x.ControlStyle.CssClass = "editor";
+                                    }).Bind(Model.Aktivan).GetHtml()
+    </div>
+    
+    <div class="buttons_line">
+        @Html.DevExpress().Button(s =>
+                                      {
+                                          s.Name = "Submit";
+                                          s.Text = "Sačuvaj";
+                                          s.UseSubmitBehavior = true;
+                                          s.ControlStyle.CssClass = "form_button";
+                                      }).GetHtml()
+        @Html.DevExpress().Button(s =>
+                                      {
+                                          var link = @Url.Action("Index");
+                                          s.Name = "Back";
+                                          s.Text = "Nazad";
+                                          s.ClientSideEvents.Click = "function(){window.location='" + link + "'}";
+                                          s.ControlStyle.CssClass = "form_button";
+                                      }).GetHtml()    
+    </div>
+
+    
+</div>
+    
